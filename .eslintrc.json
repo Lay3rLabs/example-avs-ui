@@ -2,5 +2,9 @@
   "rules": {
     "@typescript-eslint/no-explicit-any": "off"
   },
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:storybook/recommended"
+  ]
 }
