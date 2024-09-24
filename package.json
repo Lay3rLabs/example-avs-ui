@@ -2,6 +2,7 @@
   "name": "@lay3r/example-avs-ui",
   "description": "Lay3r Example AVS UI",
   "version": "0.0.1",
+  "private": "true",
   "scripts": {
     "build": "yarn build",
     "storybook": "yarn workspace @lay3r/ui storybook"
