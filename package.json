@@ -1,0 +1,39 @@
+{
+  "name": "@lay3r/example-avs-ui",
+  "description": "Lay3r Example AVS UI",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "yarn build",
+    "storybook": "yarn workspace @lay3r/ui storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lay3rLabs/example-avs-ui.git"
+  },
+  "author": "msteiner96",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lay3rLabs/example-avs-ui/issues"
+  },
+  "homepage": "https://github.com/Lay3rLabs/example-avs-ui",
+  "workspaces": [
+    "packages/types",
+    "packages/utils",
+    "packages/wallets",
+    "packages/contracts",
+    "packages/state",
+    "packages/ui",
+    "packages/core",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.2",
+    "@types/jest": "^29.5.2",
+    "jest": "^29.5.0"
+  },
+  "packageManager": "yarn@3.6.4",
+  "dependencies": {
+    "bufferutil": "^4.0.8",
+    "utf-8-validate": "^6.0.3"
+  }
+}
