@@ -48,10 +48,15 @@ const getAccount = async (walletClient: any, envConfig: any) => {
 };
 
 export async function getCustomClient(
-  walletId: WalletTypes.WalletTypes,
+  walletId: WalletTypes,
   assetName: string
 ): Promise<
-  { client: SigningStargateClient; account: any; envConfig: any } | undefined
+  | {
+      client: SigningStargateClient;
+      account: any;
+      envConfig: any;
+    }
+  | undefined
 > {
   const envConfig = getConfig(assetName);
   const walletClient = await getWalletClient(walletId);

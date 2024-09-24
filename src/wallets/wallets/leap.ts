@@ -2,13 +2,23 @@ import { Algo, OfflineDirectSigner } from "@cosmjs/proto-signing";
 import { chainRegistryChainToKeplr } from "@chain-registry/keplr";
 import { StdSignature, StdSignDoc } from "@cosmjs/amino";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { WalletTypes } from "@/types";
-import { MainnetConfig } from "@/lib/utils";
+import {
+  BroadcastMode,
+  ChainRecord,
+  DirectSignDoc,
+  ExtendedHttpEndpoint,
+  LeapClient,
+  SignOptions,
+  SignType,
+  SuggestToken,
+  Wallet,
+} from "@/types";
+import { MainnetConfig } from "@/utils";
 import { GasPrice, SigningStargateClient } from "@cosmjs/stargate";
 
-export class Leap implements WalletTypes.Wallet {
-  readonly client: WalletTypes.LeapClient;
-  private _defaultSignOptions: WalletTypes.SignOptions = {
+export class Leap implements Wallet {
+  readonly client: LeapClient;
+  private _defaultSignOptions: SignOptions = {
     preferNoSetFee: false,
     preferNoSetMemo: true,
     disableBalanceCheck: true,
@@ -18,11 +28,11 @@ export class Leap implements WalletTypes.Wallet {
     return this._defaultSignOptions;
   }
 
-  setDefaultSignOptions(options: WalletTypes.SignOptions) {
+  setDefaultSignOptions(options: SignOptions) {
     this._defaultSignOptions = options;
   }
 
-  constructor(client: WalletTypes.LeapClient) {
+  constructor(client: LeapClient) {
     this.client = client;
   }
 
@@ -30,7 +40,7 @@ export class Leap implements WalletTypes.Wallet {
     await this.client.enable(chainIds);
   }
 
-  async suggestToken({ chainId, tokens, type }: WalletTypes.SuggestToken) {
+  async suggestToken({ chainId, tokens, type }: SuggestToken) {
     if (type === "cw20") {
       for (const { contractAddress } of tokens) {
         await this.client.suggestToken(chainId, contractAddress);
@@ -38,19 +48,19 @@ export class Leap implements WalletTypes.Wallet {
     }
   }
 
-  async addChain(chainInfo: WalletTypes.ChainRecord) {
+  async addChain(chainInfo: ChainRecord) {
     const suggestChain = chainRegistryChainToKeplr(
       chainInfo.chain,
       chainInfo.assetList ? [chainInfo.assetList] : []
     );
 
     if (chainInfo.preferredEndpoints?.rest?.[0]) {
-      (suggestChain.rest as string | WalletTypes.ExtendedHttpEndpoint) =
+      (suggestChain.rest as string | ExtendedHttpEndpoint) =
         chainInfo.preferredEndpoints?.rest?.[0];
     }
 
     if (chainInfo.preferredEndpoints?.rpc?.[0]) {
-      (suggestChain.rpc as string | WalletTypes.ExtendedHttpEndpoint) =
+      (suggestChain.rpc as string | ExtendedHttpEndpoint) =
         chainInfo.preferredEndpoints?.rpc?.[0];
     }
 
@@ -81,7 +91,7 @@ export class Leap implements WalletTypes.Wallet {
     };
   }
 
-  getOfflineSigner(chainId: string, preferredSignType?: WalletTypes.SignType) {
+  getOfflineSigner(chainId: string, preferredSignType?: SignType) {
     switch (preferredSignType) {
       case "amino":
         return this.getOfflineSignerAmino(chainId);
@@ -111,9 +121,7 @@ export class Leap implements WalletTypes.Wallet {
     );
   }
 
-  async getSigningStargateClient(
-    envConfig: any
-  ): Promise<SigningStargateClient> {
+  async getSigningStargateClient(): Promise<SigningStargateClient> {
     return SigningStargateClient.connectWithSigner(
       MainnetConfig.rpc_endpoint,
       this.getOfflineSigner(MainnetConfig.chain_id),
@@ -127,7 +135,7 @@ export class Leap implements WalletTypes.Wallet {
     chainId: string,
     signer: string,
     signDoc: StdSignDoc,
-    signOptions?: WalletTypes.SignOptions
+    signOptions?: SignOptions
   ) {
     return await this.client.signAmino(
       chainId,
@@ -148,8 +156,8 @@ export class Leap implements WalletTypes.Wallet {
   async signDirect(
     chainId: string,
     signer: string,
-    signDoc: WalletTypes.DirectSignDoc,
-    signOptions?: WalletTypes.SignOptions
+    signDoc: DirectSignDoc,
+    signOptions?: SignOptions
   ) {
     return await this.client.signDirect(
       chainId,
@@ -159,21 +167,17 @@ export class Leap implements WalletTypes.Wallet {
     );
   }
 
-  async sendTx(
-    chainId: string,
-    tx: Uint8Array,
-    mode: WalletTypes.BroadcastMode
-  ) {
+  async sendTx(chainId: string, tx: Uint8Array, mode: BroadcastMode) {
     return await this.client.sendTx(chainId, tx, mode);
   }
 }
 
 interface LeapWindow {
-  leap?: WalletTypes.LeapClient;
+  leap?: LeapClient;
 }
 
 export const getLeapFromExtension: () => Promise<
-  WalletTypes.LeapClient | undefined
+  LeapClient | undefined
 > = async () => {
   if (typeof window === "undefined") {
     return void 0;

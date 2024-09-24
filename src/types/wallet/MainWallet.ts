@@ -1,5 +1,4 @@
 import {
-  AccountData,
   AminoSignResponse,
   OfflineAminoSigner,
   StdSignature,

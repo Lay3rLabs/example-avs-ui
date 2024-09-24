@@ -8,12 +8,20 @@ import {
   Keplr as K,
   Window as KeplrWindow,
 } from "@keplr-wallet/types";
-import { WalletTypes } from "@/types";
-import { MainnetConfig } from "@/lib/utils";
+import {
+  ChainRecord,
+  DirectSignDoc,
+  ExtendedHttpEndpoint,
+  SignOptions,
+  SignType,
+  SuggestToken,
+  Wallet,
+} from "@/types";
+import { MainnetConfig } from "@/utils";
 
-export class Keplr implements WalletTypes.Wallet {
+export class Keplr implements Wallet {
   readonly client: K;
-  private _defaultSignOptions: WalletTypes.SignOptions = {
+  private _defaultSignOptions: SignOptions = {
     preferNoSetFee: false,
     preferNoSetMemo: true,
     disableBalanceCheck: true,
@@ -23,7 +31,7 @@ export class Keplr implements WalletTypes.Wallet {
     return this._defaultSignOptions;
   }
 
-  setDefaultSignOptions(options: WalletTypes.SignOptions) {
+  setDefaultSignOptions(options: SignOptions) {
     this._defaultSignOptions = options;
   }
 
@@ -45,9 +53,7 @@ export class Keplr implements WalletTypes.Wallet {
     );
   }
 
-  async getSigningStargateClient(
-    envConfig: any
-  ): Promise<SigningStargateClient> {
+  async getSigningStargateClient(): Promise<SigningStargateClient> {
     return SigningStargateClient.connectWithSigner(
       MainnetConfig.rpc_endpoint,
       this.getOfflineSigner(MainnetConfig.chain_id),
@@ -57,7 +63,7 @@ export class Keplr implements WalletTypes.Wallet {
     );
   }
 
-  async suggestToken({ chainId, tokens, type }: WalletTypes.SuggestToken) {
+  async suggestToken({ chainId, tokens, type }: SuggestToken) {
     if (type === "cw20") {
       for (const { contractAddress, viewingKey } of tokens) {
         await this.client.suggestToken(chainId, contractAddress, viewingKey);
@@ -85,7 +91,7 @@ export class Keplr implements WalletTypes.Wallet {
     };
   }
 
-  getOfflineSigner(chainId: string, preferredSignType?: WalletTypes.SignType) {
+  getOfflineSigner(chainId: string, preferredSignType?: SignType) {
     switch (preferredSignType) {
       case "amino":
         return this.getOfflineSignerAmino(chainId);
@@ -119,10 +125,12 @@ export class Keplr implements WalletTypes.Wallet {
       getAccounts: async () => {
         return [await this.getAccount(chainId)];
       },
+      // @ts-expect-error Don't expect an error here
       signDirect: async (signerAddress, signDoc) => {
         return this.signDirect(
           chainId,
           signerAddress,
+          //@ts-expect-error Some outdated version
           signDoc,
           this.defaultSignOptions
         );
@@ -131,19 +139,19 @@ export class Keplr implements WalletTypes.Wallet {
     // return this.client.getOfflineSigner(chainId) as OfflineDirectSigner;
   }
 
-  async addChain(chainInfo: WalletTypes.ChainRecord) {
+  async addChain(chainInfo: ChainRecord) {
     const suggestChain = chainRegistryChainToKeplr(
       chainInfo.chain,
       chainInfo.assetList ? [chainInfo.assetList] : []
     );
 
     if (chainInfo.preferredEndpoints?.rest?.[0]) {
-      (suggestChain.rest as string | WalletTypes.ExtendedHttpEndpoint) =
+      (suggestChain.rest as string | ExtendedHttpEndpoint) =
         chainInfo.preferredEndpoints?.rest?.[0];
     }
 
     if (chainInfo.preferredEndpoints?.rpc?.[0]) {
-      (suggestChain.rpc as string | WalletTypes.ExtendedHttpEndpoint) =
+      (suggestChain.rpc as string | ExtendedHttpEndpoint) =
         chainInfo.preferredEndpoints?.rpc?.[0];
     }
 
@@ -154,7 +162,7 @@ export class Keplr implements WalletTypes.Wallet {
     chainId: string,
     signer: string,
     signDoc: StdSignDoc,
-    signOptions?: WalletTypes.SignOptions
+    signOptions?: SignOptions
   ) {
     return await this.client.signAmino(
       chainId,
@@ -172,11 +180,12 @@ export class Keplr implements WalletTypes.Wallet {
     return await this.client.signArbitrary(chainId, signer, data);
   }
 
+  //@ts-expect-error Dunno why
   async signDirect(
     chainId: string,
     signer: string,
-    signDoc: WalletTypes.DirectSignDoc,
-    signOptions?: WalletTypes.SignOptions
+    signDoc: DirectSignDoc,
+    signOptions?: SignOptions
   ) {
     return await this.client.signDirect(
       chainId,
@@ -217,7 +226,7 @@ export const getKeplrFromExtension: () => Promise<K | undefined> = async () => {
         (event.target as Document).readyState === "complete"
       ) {
         const keplr = (window as KeplrWindow).keplr;
-        
+
         if (keplr) {
           resolve(keplr);
         } else {

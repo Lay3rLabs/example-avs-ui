@@ -7,7 +7,7 @@ import {
   WalletTypes,
 } from "@/types";
 import { chainRegistryEntry, MainnetConfig } from "@/utils";
-import { Cosmostation, getWalletClient, Keplr, Leap } from "@/wallets";
+import { getWalletClient, Keplr, Leap } from "@/wallets";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { useAppStore } from "../store";
 
@@ -31,7 +31,7 @@ const updateState = (
 
 // Generic function to connect to a wallet
 const connectWalletGeneric = async (
-  walletClient: Leap | Cosmostation | Keplr | undefined,
+  walletClient: Leap | Keplr | undefined,
   envConfig: {
     rpc_endpoint: string;
     lcd_endpoint: string;
