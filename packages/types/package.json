@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "name": "@lay3r/types",
+  "files": [
+    "build/**/*"
+  ],
+  "scripts": {
+    "test": "tsc && jest",
+    "build": "tsc"
+  },
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "devDependencies": {
+    "typescript": "5.0.4"
+  }
+}
