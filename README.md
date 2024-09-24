@@ -113,19 +113,11 @@ yarn dev
 ```
 This will launch the app at `http://localhost:3000`. Changes in the source files will automatically reload the browser.
 
-### Building for Production
-
-To create a static build of the application, run:
-```bash
-yarn build
-```
-This will generate an optimized production build in the `.next` directory.
-
 ### Static Export
 
 If you need to generate a fully static site, run:
 ```bash
-yarn export
+yarn build
 ```
 This will create an `out` directory with static files that can be deployed to any static hosting service or CDN.
 
