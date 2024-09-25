@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import Button from './Button';
 
@@ -19,6 +17,6 @@ type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
-    children: "foo",
+    children: "Button",
   },
 };
