@@ -13,7 +13,8 @@ All notable changes to this project will be documented in this file.
   - **Global Types:** Project-wide TypeScript type definitions.
 - Added basic folder structure for a modular and maintainable codebase.
 - Added storybook for isolated component environment
-- Added themes with custom color palette
+  - Theme switcher
+  - dark and light theme
 
 ### Configuration
 - Set up basic Next.js configuration in `next.config.js`.
