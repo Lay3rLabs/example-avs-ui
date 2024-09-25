@@ -19,6 +19,9 @@ import {
 } from "@/types";
 import { MainnetConfig } from "@/utils";
 
+/**
+ * Keplr class provides methods for interacting with the Keplr wallet.
+ */
 export class Keplr implements Wallet {
   readonly client: K;
   private _defaultSignOptions: SignOptions = {
@@ -27,42 +30,75 @@ export class Keplr implements Wallet {
     disableBalanceCheck: true,
   };
 
+  /**
+   * Gets the default sign options for transactions.
+   */
   get defaultSignOptions() {
     return this._defaultSignOptions;
   }
 
+  /**
+   * Sets the default sign options for transactions.
+   *
+   * @param options - The sign options to set as default.
+   */
   setDefaultSignOptions(options: SignOptions) {
     this._defaultSignOptions = options;
   }
 
+  /**
+   * Creates a new instance of the Keplr class.
+   *
+   * @param client - The Keplr client object.
+   */
   constructor(client: K) {
     this.client = client;
   }
 
+  /**
+   * Enables the specified chain(s) in the Keplr wallet.
+   *
+   * @param chainIds - The chain ID(s) to enable.
+   */
   async enable(chainIds: string | string[]) {
     await this.client.enable(chainIds);
   }
 
+  /**
+   * Gets a signing client for CosmWasm transactions.
+   *
+   * @returns A promise that resolves to a SigningCosmWasmClient instance.
+   */
   async getSigningCosmWasmClient(): Promise<SigningCosmWasmClient> {
     return SigningCosmWasmClient.connectWithSigner(
       MainnetConfig.rpc_endpoint,
       this.getOfflineSigner(MainnetConfig.chain_id),
       {
-        gasPrice: GasPrice.fromString("0.025utestcore"),
+        gasPrice: GasPrice.fromString("0.025uslay"),
       }
     );
   }
 
+  /**
+   * Gets a signing client for Stargate transactions.
+   *
+   * @returns A promise that resolves to a SigningStargateClient instance.
+   */
   async getSigningStargateClient(): Promise<SigningStargateClient> {
     return SigningStargateClient.connectWithSigner(
       MainnetConfig.rpc_endpoint,
       this.getOfflineSigner(MainnetConfig.chain_id),
       {
-        gasPrice: GasPrice.fromString("0.025utestcore"),
+        gasPrice: GasPrice.fromString("0.025uslay"),
       }
     );
   }
 
+  /**
+   * Suggests adding a CW20 token to the Keplr wallet.
+   *
+   * @param params - Object containing chainId, tokens, and type of token to suggest.
+   */
   async suggestToken({ chainId, tokens, type }: SuggestToken) {
     if (type === "cw20") {
       for (const { contractAddress, viewingKey } of tokens) {
@@ -71,6 +107,12 @@ export class Keplr implements Wallet {
     }
   }
 
+  /**
+   * Retrieves a simple account object containing the namespace, chainId, address, and username.
+   *
+   * @param chainId - The chain ID to get the account information from.
+   * @returns A promise that resolves to a simple account object.
+   */
   async getSimpleAccount(chainId: string) {
     const { address, username } = await this.getAccount(chainId);
     return {
@@ -81,6 +123,12 @@ export class Keplr implements Wallet {
     };
   }
 
+  /**
+   * Retrieves detailed account information from the Keplr wallet.
+   *
+   * @param chainId - The chain ID to get the account information from.
+   * @returns A promise that resolves to an object containing username, address, algo, and pubkey.
+   */
   async getAccount(chainId: string) {
     const key = await this.client.getKey(chainId);
     return {
@@ -91,6 +139,13 @@ export class Keplr implements Wallet {
     };
   }
 
+  /**
+   * Gets an offline signer for the specified chain and signing type.
+   *
+   * @param chainId - The chain ID for which to get the offline signer.
+   * @param preferredSignType - The preferred sign type ('amino' or 'direct').
+   * @returns An offline signer for the specified chain.
+   */
   getOfflineSigner(chainId: string, preferredSignType?: SignType) {
     switch (preferredSignType) {
       case "amino":
@@ -100,9 +155,14 @@ export class Keplr implements Wallet {
       default:
         return this.getOfflineSignerAmino(chainId);
     }
-    // return this.client.getOfflineSignerAuto(chainId);
   }
 
+  /**
+   * Gets an amino offline signer for the specified chain.
+   *
+   * @param chainId - The chain ID for which to get the offline amino signer.
+   * @returns An OfflineAminoSigner object.
+   */
   getOfflineSignerAmino(chainId: string): OfflineAminoSigner {
     return {
       getAccounts: async () => {
@@ -117,28 +177,37 @@ export class Keplr implements Wallet {
         );
       },
     };
-    // return this.client.getOfflineSignerOnlyAmino(chainId);
   }
 
+  /**
+   * Gets a direct offline signer for the specified chain.
+   *
+   * @param chainId - The chain ID for which to get the offline direct signer.
+   * @returns An OfflineDirectSigner object.
+   */
   getOfflineSignerDirect(chainId: string): OfflineDirectSigner {
     return {
       getAccounts: async () => {
         return [await this.getAccount(chainId)];
       },
-      // @ts-expect-error Don't expect an error here
+      // @ts-expect-error TODO
       signDirect: async (signerAddress, signDoc) => {
         return this.signDirect(
           chainId,
           signerAddress,
-          //@ts-expect-error Some outdated version
+          // @ts-expect-error TODO
           signDoc,
           this.defaultSignOptions
         );
       },
     };
-    // return this.client.getOfflineSigner(chainId) as OfflineDirectSigner;
   }
 
+  /**
+   * Adds a new chain to the Keplr wallet.
+   *
+   * @param chainInfo - The ChainRecord containing information about the chain to add.
+   */
   async addChain(chainInfo: ChainRecord) {
     const suggestChain = chainRegistryChainToKeplr(
       chainInfo.chain,
@@ -158,6 +227,15 @@ export class Keplr implements Wallet {
     await this.client.experimentalSuggestChain(suggestChain);
   }
 
+  /**
+   * Signs a transaction using the amino signing method.
+   *
+   * @param chainId - The chain ID for which to sign the transaction.
+   * @param signer - The signer address.
+   * @param signDoc - The document to be signed.
+   * @param signOptions - Optional sign options to use.
+   * @returns A promise that resolves to the signed transaction.
+   */
   async signAmino(
     chainId: string,
     signer: string,
@@ -172,6 +250,14 @@ export class Keplr implements Wallet {
     );
   }
 
+  /**
+   * Signs arbitrary data using the Keplr wallet.
+   *
+   * @param chainId - The chain ID for which to sign the data.
+   * @param signer - The signer address.
+   * @param data - The data to be signed.
+   * @returns A promise that resolves to the signed data.
+   */
   async signArbitrary(
     chainId: string,
     signer: string,
@@ -180,7 +266,16 @@ export class Keplr implements Wallet {
     return await this.client.signArbitrary(chainId, signer, data);
   }
 
-  //@ts-expect-error Dunno why
+  /**
+   * Signs a transaction using the direct signing method.
+   *
+   * @param chainId - The chain ID for which to sign the transaction.
+   * @param signer - The signer address.
+   * @param signDoc - The document to be signed.
+   * @param signOptions - Optional sign options to use.
+   * @returns A promise that resolves to the signed transaction.
+   */
+  // @ts-expect-error TODO
   async signDirect(
     chainId: string,
     signer: string,
@@ -195,14 +290,28 @@ export class Keplr implements Wallet {
     );
   }
 
+  /**
+   * Sends a transaction to the blockchain.
+   *
+   * @param chainId - The chain ID to which the transaction will be sent.
+   * @param tx - The transaction bytes.
+   * @param mode - The broadcast mode.
+   * @returns A promise that resolves to the result of the transaction broadcast.
+   */
   async sendTx(chainId: string, tx: Uint8Array, mode: BroadcastMode) {
     return await this.client.sendTx(chainId, tx, mode);
   }
 }
 
+/**
+ * Retrieves the Keplr instance from the browser extension.
+ *
+ * @returns A promise that resolves to the Keplr client or undefined if not installed.
+ * @throws An error if Keplr is not installed.
+ */
 export const getKeplrFromExtension: () => Promise<K | undefined> = async () => {
   if (typeof window === "undefined") {
-    return void 0;
+    return undefined;
   }
 
   const keplr = (window as KeplrWindow).keplr;
@@ -215,7 +324,7 @@ export const getKeplrFromExtension: () => Promise<K | undefined> = async () => {
     if (keplr) {
       return keplr;
     } else {
-      throw "Keplr not installed";
+      throw new Error("Keplr not installed");
     }
   }
 
@@ -230,7 +339,7 @@ export const getKeplrFromExtension: () => Promise<K | undefined> = async () => {
         if (keplr) {
           resolve(keplr);
         } else {
-          reject("Keplr not installed");
+          reject(new Error("Keplr not installed"));
         }
         document.removeEventListener("readystatechange", documentStateChange);
       }

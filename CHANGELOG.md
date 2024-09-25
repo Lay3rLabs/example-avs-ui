@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file.
   - **Wallet Integration:** Wallet adapter setup for easy addition of new wallets. Added Keplr and Leap.
   - **Global Types:** Project-wide TypeScript type definitions.
 - Added basic folder structure for a modular and maintainable codebase.
+- Added storybook for isolated component environment
+  - Theme switcher
+  - dark and light theme
+
+### Changed
+- Cleaned up wallet logic
+- Added docs for how to add more wallets
 
 ### Configuration
 - Set up basic Next.js configuration in `next.config.js`.
