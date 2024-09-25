@@ -1,4 +1,3 @@
-// src/components/Button/Button.tsx
 import React from 'react';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -12,7 +11,7 @@ const Button: React.FC<ButtonProps> = ({
   ...props 
 }) => {
   return (
-    <button {...props} className="bg-red p-2 border">
+    <button {...props} className="bg-red-500 p-2 border text-text-primary">
       {children}
     </button>
   );

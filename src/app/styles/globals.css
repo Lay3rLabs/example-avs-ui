@@ -3,21 +3,81 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --text-primary: rgba(21, 22, 23, 1);
+  --text-body: rgba(36, 38, 40, 0.95);
+  --text-secondary: rgba(36, 38, 40, 0.7);
+  --text-tertiary: rgba(36, 38, 40, 0.5);
+  --text-brand: rgba(123, 97, 255, 0.95);
+  /* interactive */
+  --text-disabled: rgba(36, 38, 40, 0.05);
+  --text-interactive-active: rgba(179, 160, 255, 0.95);
+  --text-interactive-error: rgba(199, 62, 89, 0.95);
+  --text-interactive-valid: rgba(57, 166, 153, 0.95);
+  --text-interactive-brand-disabled: rgba(123, 97, 255, 0.25);
+
+  --border-base: rgba(0, 0, 0, 0.05);
+  --border-primary: rgba(36, 39, 40, 0.1);
+  --border-secondary: rgba(36, 39, 40, 0.05);
+  /* interactive */
+  --border-interactive-hover: rgba(36, 39, 40, 0.15);
+  --border-interactive-selected: rgba(36, 39, 40, 0.2);
+  --border-interactive-focus: rgba(36, 39, 40, 0.2);
+  --border-interactive-disabled: rgba(36, 39, 40, 0.05);
+  --border-interactive-active: rgba(123, 97, 255, 0.65);
+  --border-interactive-error: rgba(199, 62, 89, 0.65);
+  --border-interactive-valid: rgba(123, 97, 255, 0.15);
+
+  --background: rgba(255, 255, 255, 1);
+  --background-primary: rgba(36, 38, 40, 0.05);
+  --background-secondary: rgba(243, 246, 248, 0.05);
+  --background-tertiary: rgba(36, 39, 40, 0.03);
+  /* interactive */
+  --background-interactive-hover: rgba(36, 39, 40, 0.1);
+  --background-interactive-selected: rgba(36, 39, 40, 0.15);
+  --background-interactive-pressed: rgba(36, 39, 40, 0.15);
+  --background-interactive-disabled: rgba(36, 39, 40, 0.03);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --text-primary: rgba(255, 255, 255, 1);
+  --text-body: rgba(243, 246, 248, 0.95);
+  --text-secondary: rgba(243, 246, 248, 0.7);
+  --text-tertiary: rgba(243, 246, 248, 0.5);
+  --text-brand: rgba(123, 97, 255, 0.95);
+  /* interactive */
+  --text-disabled: rgba(243, 246, 248, 0.2);
+  --text-interactive-active: rgba(179, 160, 255, 0.95);
+  --text-interactive-error: rgba(199, 62, 89, 0.95);
+  --text-interactive-valid: rgba(57, 166, 153, 0.95);
+  --text-interactive-brand-disabled: rgba(57, 166, 153, 0.95);
+
+  --border-base: rgba(0, 0, 0, 1);
+  --border-primary: rgba(243, 246, 248, 0.15);
+  --border-secondary: rgba(243, 246, 248, 0.05);
+  /* interactive */
+  --border-interactive-hover: rgba(243, 246, 248, 0.15);
+  --border-interactive-selected: rgba(243, 246, 248, 0.2);
+  --border-interactive-focus: rgba(243, 246, 248, 0.2);
+  --border-interactive-disabled: rgba(243, 246, 248, 0.05);
+  --border-interactive-active: rgba(123, 97, 255, 0.65);
+  --border-interactive-error: rgba(199, 62, 89, 0.65);
+  --border-interactive-valid: rgba(123, 97, 255, 0.25);
+
+  --background: rgba(21, 22, 23, 1);
+  --background-primary: rgba(243, 246, 248, 0.08);
+  --background-secondary: rgba(243, 246, 248, 0.05);
+  --background-tertiary: rgba(243, 246, 248, 0.03);
+  /* interactive */
+  --background-interactive-hover: rgba(243, 246, 248, 0.1);
+  --background-interactive-selected: rgba(243, 246, 248, 0.15);
+  --background-interactive-pressed: rgba(243, 246, 248, 0.15);
+  --background-interactive-disabled: rgba(243, 246, 248, 0.03);
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
