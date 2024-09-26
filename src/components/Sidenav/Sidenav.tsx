@@ -1,17 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-
-export interface SidenavItemProps {
-  label: string;
-  icon: any;
-  active: boolean;
-  href: string;
-  target?: string;
-}
-
-export interface SidenavProps {
-  navItems: SidenavItemProps[];
-}
+import { SidenavItemProps, SidenavProps } from "@/types/ui/sidenav";
 
 const Sidenav: React.FC<SidenavProps> = (props) => {
   return (
@@ -31,6 +20,9 @@ const Sidenav: React.FC<SidenavProps> = (props) => {
                   { "!bg-background-interactive-selected": item.active }
                 )}
               >
+                <span className="material-icons text-text-primary mr-4">
+                  {item.icon}
+                </span>
                 {item.label}
               </a>
             </li>

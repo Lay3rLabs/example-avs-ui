@@ -1,17 +1,6 @@
+import { TopnavItemProps, TopnavProps } from "@/types/ui";
 import classNames from "classnames";
 import React, { useState } from "react";
-
-export interface TopnavItemProps {
-  label: string;
-  href: string;
-}
-
-export interface TopnavProps {
-  navItems: TopnavItemProps[];
-  walletAddress: string | undefined;
-  onConnectWalletClick: () => void;
-  onDisconnectWalletClick: () => void;
-}
 
 const Topnav: React.FC<TopnavProps> = (props) => {
   const [logoutWindowOpen, setLogoutWindowOpen] = useState<boolean>(false);
@@ -27,6 +16,11 @@ const Topnav: React.FC<TopnavProps> = (props) => {
                   <a className="text-text-primary font-semibold text-xl cursor-pointer select-none hover:underline">
                     {item.label}
                   </a>
+                  {index < props.navItems.length - 1 && (
+                    <span className="material-icons text-background-interactive-hover ml-4">
+                      arrow_forward_ios
+                    </span>
+                  )}
                 </div>
               </li>
             ))}
@@ -44,14 +38,36 @@ const Topnav: React.FC<TopnavProps> = (props) => {
                 {props.walletAddress.slice(0, 4)}...
                 {props.walletAddress.slice(-4)}
               </p>
-              <button onClick={() => setLogoutWindowOpen(!logoutWindowOpen)} className="text-text-body mr-2">v</button>
+              <button
+                onClick={() => setLogoutWindowOpen(!logoutWindowOpen)}
+                className="text-text-body mr-2 h-6"
+              >
+                <span className="material-icons">
+                  keyboard_arrow_down
+                </span>
+              </button>
             </>
           ) : (
-            <button onClick={() => props.onConnectWalletClick} className="text-text-primary rounded-md ml-4 mr-2 text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover">Connect Wallet</button>
+            <button
+              onClick={() => props.onConnectWalletClick}
+              className="text-text-primary rounded-md ml-4 mr-2 text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover"
+            >
+              Connect Wallet
+            </button>
           )}
 
-          <div className={classNames("absolute right-0 hidden border-b border-l border-r border-border-primary rounded-b-md top-[65px]", { "!block": logoutWindowOpen })}>
-            <button onClick={() => props.onDisconnectWalletClick} className="text-text-primary text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover">Disconnect Wallet</button>
+          <div
+            className={classNames(
+              "absolute right-0 hidden border-b border-l border-r border-border-primary rounded-b-md top-[65px]",
+              { "!block": logoutWindowOpen }
+            )}
+          >
+            <button
+              onClick={() => props.onDisconnectWalletClick}
+              className="text-text-primary text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover"
+            >
+              Disconnect Wallet
+            </button>
           </div>
         </div>
       </div>

@@ -8,13 +8,13 @@ const DemoLayout = () => {
       <Sidenav
         navItems={[{
           label: "Nav Item 1",
-          icon: "foo",
+          icon: "arrow_forward_ios",
           active: true,
           href: "#",
         },
         {
           label: "Nav Item 2",
-          icon: "foo",
+          icon: "arrow_forward_ios",
           active: false,
           href: "#",
         },]}
