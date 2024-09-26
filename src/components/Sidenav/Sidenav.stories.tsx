@@ -3,7 +3,7 @@ import Sidenav from "./Sidenav";
 
 // Default metadata of the story https://storybook.js.org/docs/react/api/csf#default-export
 const meta: Meta<typeof Sidenav> = {
-  title: "General/Sidenav",
+  title: "Layout/Sidenav",
   component: Sidenav,
 };
 
