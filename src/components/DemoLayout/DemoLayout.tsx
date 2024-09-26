@@ -4,7 +4,7 @@ import Topnav from "../Topnav/Topnav";
 
 const DemoLayout = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-[calc(100vh-32px)]">
       <Sidenav
         navItems={[{
           label: "Nav Item 1",
