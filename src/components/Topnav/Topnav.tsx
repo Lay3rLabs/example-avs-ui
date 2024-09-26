@@ -12,12 +12,12 @@ const Topnav: React.FC<TopnavProps> = (props) => {
           {props.navItems &&
             props.navItems.map((item: TopnavItemProps, index: number) => (
               <li key={index}>
-                <div className="flex items-center mr-4">
+                <div className="flex items-center mr-3">
                   <a className="text-text-primary font-semibold text-xl cursor-pointer select-none hover:underline">
                     {item.label}
                   </a>
                   {index < props.navItems.length - 1 && (
-                    <span className="material-icons text-background-interactive-hover ml-4">
+                    <span className="material-icons text-background-interactive-hover ml-3">
                       arrow_forward_ios
                     </span>
                   )}
