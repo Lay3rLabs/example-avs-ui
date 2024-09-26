@@ -17,6 +17,7 @@
     "@cosmjs/cosmwasm-stargate": "^0.32.4",
     "@keplr-wallet/types": "^0.12.129",
     "chain-registry": "^1.63.100",
+    "framer-motion": "^11.7.0",
     "material-icons": "^1.13.12",
     "next": "14.2.13",
     "react": "^18",

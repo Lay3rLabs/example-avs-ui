@@ -1,9 +1,14 @@
+"use client";
 import { TopnavItemProps, TopnavProps } from "@/types/ui";
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Topnav: React.FC<TopnavProps> = (props) => {
   const [logoutWindowOpen, setLogoutWindowOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLogoutWindowOpen(false);
+  }, [props.walletAddress]);
 
   return (
     <div className="w-full px-6 bg-background">
@@ -28,10 +33,19 @@ const Topnav: React.FC<TopnavProps> = (props) => {
         <div className="border-l border-l-border-primary flex items-center relative">
           {props.walletAddress ? (
             <>
-              <div className="w-9 h-9 overflow-hidden rounded-md ml-4 mr-2">
+              {/* User Balance Display */}
+              {props.userBalance !== undefined && (
+                <div className="flex items-center text-text-primary text-sm font-semibold ml-4 mr-4">
+                  <span className="mr-1">{props.userBalance.toFixed(2)}</span>
+                  <span className="text-text-secondary">SLAY</span>
+                </div>
+              )}
+              {/* User Icon and Address */}
+              <div className="w-9 h-9 overflow-hidden rounded-md mr-2">
                 <img
                   className="max-w-full"
                   src={`https://api.dicebear.com/9.x/glass/svg?seed=${props.walletAddress}`}
+                  alt="User Avatar"
                 />
               </div>
               <p className="text-text-primary text-sm mr-2">
@@ -42,14 +56,12 @@ const Topnav: React.FC<TopnavProps> = (props) => {
                 onClick={() => setLogoutWindowOpen(!logoutWindowOpen)}
                 className="text-text-body mr-2 h-6"
               >
-                <span className="material-icons">
-                  keyboard_arrow_down
-                </span>
+                <span className="material-icons">keyboard_arrow_down</span>
               </button>
             </>
           ) : (
             <button
-              onClick={() => props.onConnectWalletClick}
+              onClick={() => props.onConnectWalletClick()}
               className="text-text-primary rounded-md ml-4 mr-2 text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover"
             >
               Connect Wallet
@@ -63,7 +75,7 @@ const Topnav: React.FC<TopnavProps> = (props) => {
             )}
           >
             <button
-              onClick={() => props.onDisconnectWalletClick}
+              onClick={() => props.onDisconnectWalletClick()}
               className="text-text-primary text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover"
             >
               Disconnect Wallet

@@ -8,4 +8,5 @@ export interface TopnavProps {
   walletAddress: string | undefined;
   onConnectWalletClick: () => void;
   onDisconnectWalletClick: () => void;
+  userBalance: number | undefined;
 }
