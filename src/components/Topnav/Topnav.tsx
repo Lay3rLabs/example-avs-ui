@@ -1,10 +1,14 @@
 "use client";
 import { TopnavItemProps, TopnavProps } from "@/types/ui";
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Topnav: React.FC<TopnavProps> = (props) => {
   const [logoutWindowOpen, setLogoutWindowOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLogoutWindowOpen(false);
+  }, [props.walletAddress]);
 
   return (
     <div className="w-full px-6 bg-background">
