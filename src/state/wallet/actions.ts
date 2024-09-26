@@ -40,9 +40,16 @@ const connectWalletGeneric = async (
   },
   walletType: WalletTypes
 ) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  await window.keplr.experimentalSuggestChain(chainRegistryEntry);
+  if (walletClient instanceof Keplr) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    await window.keplr.experimentalSuggestChain(chainRegistryEntry);
+  } else if (walletClient instanceof Leap) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    await window.leap.experimentalSuggestChain(chainRegistryEntry);
+  }
+
   await walletClient!.enable(envConfig.chain_id);
 
   const account = await walletClient!.getAccount(envConfig.chain_id);

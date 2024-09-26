@@ -1,3 +1,4 @@
+"use client";
 import { TopnavItemProps, TopnavProps } from "@/types/ui";
 import classNames from "classnames";
 import React, { useState } from "react";
@@ -42,14 +43,12 @@ const Topnav: React.FC<TopnavProps> = (props) => {
                 onClick={() => setLogoutWindowOpen(!logoutWindowOpen)}
                 className="text-text-body mr-2 h-6"
               >
-                <span className="material-icons">
-                  keyboard_arrow_down
-                </span>
+                <span className="material-icons">keyboard_arrow_down</span>
               </button>
             </>
           ) : (
             <button
-              onClick={() => props.onConnectWalletClick}
+              onClick={() => props.onConnectWalletClick()}
               className="text-text-primary rounded-md ml-4 mr-2 text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover"
             >
               Connect Wallet
@@ -63,7 +62,7 @@ const Topnav: React.FC<TopnavProps> = (props) => {
             )}
           >
             <button
-              onClick={() => props.onDisconnectWalletClick}
+              onClick={() => props.onDisconnectWalletClick()}
               className="text-text-primary text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover"
             >
               Disconnect Wallet

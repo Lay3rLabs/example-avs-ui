@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { WalletModal } from "./WalletModal";
 import { useState } from "react";
+import { WalletTypes } from "@/types";
 
 // Default metadata for the story
 const meta: Meta<typeof WalletModal> = {
@@ -26,7 +27,7 @@ export const DefaultWalletModal: Story = {
     const [isOpen, setIsOpen] = useState(args.open);
 
     // Mock asynchronous wallet connection function
-    const mockOnWalletClick = async (wallet: "keplr" | "leap") => {
+    const mockOnWalletClick = async (wallet: WalletTypes) => {
       args.onWalletClick(wallet);
       return new Promise<void>((resolve) => {
         setTimeout(() => {

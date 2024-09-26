@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Modal,
@@ -7,17 +7,15 @@ import {
   ModalBody,
   ModalFooter,
 } from "@/components/Modal/Modal";
-
-// Define a type for wallet keys
-type WalletType = "keplr" | "leap";
+import { WalletTypes } from "@/types";
 
 // Define the wallet details with the WalletType keys
-const walletDetails: Record<WalletType, { icon: string; name: string }> = {
-  keplr: {
+const walletDetails: Record<WalletTypes, { icon: string; name: string }> = {
+  Keplr: {
     icon: "https://raw.githubusercontent.com/WHELP-project/whelp-frontend/main/packages/ui/public/images/walletIcons/keplr.png",
     name: "Keplr",
   },
-  leap: {
+  Leap: {
     icon: "https://raw.githubusercontent.com/WHELP-project/whelp-frontend/refs/heads/main/packages/ui/public/images/walletIcons/leap.png",
     name: "Leap",
   },
@@ -30,14 +28,14 @@ export function WalletModal({
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onWalletClick: (wallet: WalletType) => Promise<void>;
+  onWalletClick: (wallet: WalletTypes) => Promise<void>;
 }) {
-  const [loadingWallet, setLoadingWallet] = useState<WalletType | null>(null);
-  const [connectedWallet, setConnectedWallet] = useState<WalletType | null>(
+  const [loadingWallet, setLoadingWallet] = useState<WalletTypes | null>(null);
+  const [connectedWallet, setConnectedWallet] = useState<WalletTypes | null>(
     null
   );
 
-  const handleWalletClick = async (wallet: WalletType) => {
+  const handleWalletClick = async (wallet: WalletTypes) => {
     setLoadingWallet(wallet);
     try {
       await onWalletClick(wallet);
@@ -48,6 +46,12 @@ export function WalletModal({
       setLoadingWallet(null);
     }
   };
+
+  // Reset State when modal reopened
+  useEffect(() => {
+    setLoadingWallet(null);
+    setConnectedWallet(null);
+  }, [open]);
 
   return (
     <Modal isOpen={open} onClose={() => setOpen(false)}>
@@ -68,15 +72,15 @@ export function WalletModal({
               <button
                 key={wallet}
                 className="w-full flex items-center p-3 mb-3 border border-border-primary rounded-lg transition-transform transform hover:scale-105 hover:bg-background-interactive-hover"
-                onClick={() => handleWalletClick(wallet as WalletType)} // Type assertion here
+                onClick={() => handleWalletClick(wallet as WalletTypes)} // Type assertion here
               >
                 <img
                   className="mr-4 w-8 h-8"
-                  alt={`${walletDetails[wallet as WalletType].name} icon`} // Type assertion here
-                  src={walletDetails[wallet as WalletType].icon} // Type assertion here
+                  alt={`${walletDetails[wallet as WalletTypes].name} icon`} // Type assertion here
+                  src={walletDetails[wallet as WalletTypes].icon} // Type assertion here
                 />
                 <p className="text-lg text-text-primary">
-                  {walletDetails[wallet as WalletType].name}
+                  {walletDetails[wallet as WalletTypes].name}
                 </p>
               </button>
             ))}

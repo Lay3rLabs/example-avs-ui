@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   ModalBodyProps,
   ModalFooterProps,
@@ -6,18 +7,34 @@ import {
 } from "@/types/ui";
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+  useEffect(() => {
+    // Function to handle the scroll lock
+    if (isOpen) {
+      document.body.style.overflow = "hidden"; // Prevent scroll
+    } else {
+      document.body.style.overflow = ""; // Re-enable scroll
+    }
+
+    // Cleanup function to reset overflow when the component unmounts or isOpen changes
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative bg-background-primary border-border-primary text-text-body border rounded-lg shadow-lg w-full max-w-lg">
-        {children}
-        <button
-          className="absolute top-3 right-3 text-gray-600 hover:text-gray-800"
-          onClick={onClose}
-        >
-          &times;
-        </button>
+      <div className="bg-black w-full max-w-lg">
+        <div className="relative bg-background-primary border-border-primary text-text-body border rounded-lg shadow-lg w-full max-w-lg">
+          {children}
+          <button
+            className="absolute top-3 right-3 text-gray-600 hover:text-gray-800"
+            onClick={onClose}
+          >
+            &times;
+          </button>
+        </div>
       </div>
     </div>
   );
