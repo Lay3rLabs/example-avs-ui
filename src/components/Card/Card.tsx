@@ -25,16 +25,16 @@ const Card: React.FC<CardProps & React.HTMLAttributes<HTMLDivElement>> = ({child
   );
 };
 
-const CardHeader: React.FC<CardHeaderProps> = ({ children }) => (
-  <div>{children}</div>
+const CardHeader: React.FC<CardHeaderProps & React.HTMLAttributes<HTMLDivElement>> = ({ children, ...props }) => (
+  <div {...props}>{children}</div>
 );
 
-const CardBody: React.FC<CardBodyProps> = ({ children }) => (
-  <div>{children}</div>
+const CardBody: React.FC<CardBodyProps & React.HTMLAttributes<HTMLDivElement>> = ({ children, ...props }) => (
+  <div {...props}>{children}</div>
 );
 
-const CardFooter: React.FC<CardFooterProps> = ({ children }) => (
-  <div>
+const CardFooter: React.FC<CardFooterProps & React.HTMLAttributes<HTMLDivElement>> = ({ children, ...props }) => (
+  <div {...props}>
     {children}
   </div>
 );
