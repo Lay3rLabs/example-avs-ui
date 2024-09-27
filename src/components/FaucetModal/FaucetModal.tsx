@@ -11,7 +11,7 @@ import {
 type FaucetModalProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
-  requestTokens: () => Promise<void>; // Async function as a prop
+  requestTokens: () => Promise<void>;
 };
 
 export function FaucetModal({
@@ -25,7 +25,7 @@ export function FaucetModal({
   const handleFaucetRequest = async () => {
     setIsLoading(true);
     try {
-      await requestTokens(); // Call the passed async function
+      await requestTokens();
       setIsSuccess(true);
     } catch (error) {
       console.error("Error calling faucet:", error);

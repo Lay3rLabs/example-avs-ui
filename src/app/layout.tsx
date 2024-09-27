@@ -14,6 +14,14 @@ import { callFaucet, microAmountToAmount } from "@/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
+/**
+ * RootLayout component for the main layout structure of the application.
+ *
+ * @component
+ * @param {Object} props - Properties to configure the RootLayout component.
+ * @param {React.ReactNode} props.children - The child elements to be rendered inside the layout.
+ * @returns {React.ReactElement} The rendered RootLayout component.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,22 +37,32 @@ export default function RootLayout({
   // App store for wallet states
   const appStore = useAppStore();
 
-  // Connect Wallet
+  /**
+   * Connect to the selected wallet.
+   *
+   * @param {WalletTypes} walletType - The type of wallet to connect to.
+   * @returns {Promise<void>}
+   */
   const connectWallet = async (walletType: WalletTypes): Promise<void> => {
     return await appStore.connectWallet(walletType, "prod");
   };
 
-  // Fetch balance
+  /**
+   * Fetch user balance from the blockchain.
+   *
+   * @param {string} userAddress - The address of the user.
+   * @returns {Promise<Object>} The fetched balance object.
+   */
   const fetchBalance = async (userAddress: string) => {
-    // Check users balance
     const balance = await fetchUserBalance(userAddress, "uslay");
     setUserBalance(Number(microAmountToAmount(balance.amount, 6)));
     return balance;
   };
 
-  // Query Users balance, if 0, show faucetModal
+  /**
+   * Handle faucet logic: if balance is zero, open the faucet modal.
+   */
   const handleFaucet = async () => {
-    // Run this only if the wallet is connected
     if (appStore.wallet.address) {
       const balance = await fetchBalance(appStore.wallet.address);
       if (balance.amount === "0") {
@@ -53,15 +71,17 @@ export default function RootLayout({
     }
   };
 
-  // Handle Faucet call
+  /**
+   * Request tokens from the faucet and update the balance.
+   */
   const requestTokens = async () => {
     await callFaucet(appStore.wallet.address);
 
-    // Ugly solution wait for next block
+    // Wait for next block
     await new Promise<void>((resolve) => {
       setTimeout(() => {
         resolve();
-      }, 4000); // Simulate a 4-second delay for the wallet connection
+      }, 400); // Simulate a .4-second delay for the wallet connection
     });
 
     await fetchBalance(appStore.wallet.address);
@@ -90,12 +110,8 @@ export default function RootLayout({
           <div className="w-full">
             <Topnav
               walletAddress={appStore.wallet.address}
-              onConnectWalletClick={() => {
-                setWalletModalOpen(true);
-              }}
-              onDisconnectWalletClick={() => {
-                appStore.disconnectWallet();
-              }}
+              onConnectWalletClick={() => setWalletModalOpen(true)}
+              onDisconnectWalletClick={() => appStore.disconnectWallet()}
               navItems={[
                 {
                   label: "Services",

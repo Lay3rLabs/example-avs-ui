@@ -1,8 +1,15 @@
 "use client";
+
 import { TopnavItemProps, TopnavProps } from "@/types/ui";
-import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 
+/**
+ * Topnav component for rendering a top navigation bar.
+ *
+ * @component
+ * @param {TopnavProps} props - Properties to configure the Topnav component.
+ * @returns {React.ReactElement} The rendered Topnav component.
+ */
 const Topnav: React.FC<TopnavProps> = (props) => {
   const [logoutWindowOpen, setLogoutWindowOpen] = useState<boolean>(false);
 
@@ -33,14 +40,12 @@ const Topnav: React.FC<TopnavProps> = (props) => {
         <div className="border-l border-l-border-primary flex items-center relative">
           {props.walletAddress ? (
             <>
-              {/* User Balance Display */}
               {props.userBalance !== undefined && (
                 <div className="flex items-center text-text-primary text-sm font-semibold ml-4 mr-4">
                   <span className="mr-1">{props.userBalance.toFixed(2)}</span>
                   <span className="text-text-secondary">SLAY</span>
                 </div>
               )}
-              {/* User Icon and Address */}
               <div className="w-9 h-9 overflow-hidden rounded-md mr-2">
                 <img
                   className="max-w-full"
@@ -61,29 +66,24 @@ const Topnav: React.FC<TopnavProps> = (props) => {
             </>
           ) : (
             <button
-              onClick={() => props.onConnectWalletClick()}
+              onClick={props.onConnectWalletClick}
               className="text-text-primary rounded-md ml-4 mr-2 text-sm py-2 px-2 font-bold bg-background-brand flex items-center"
             >
-              <span className="material-icons mr-1">
-                sensors
-              </span>
+              <span className="material-icons mr-1">sensors</span>
               <span>Connect to Wallet</span>
             </button>
           )}
 
-          <div
-            className={classNames(
-              "absolute right-0 hidden border-b border-l border-r border-border-primary rounded-b-md top-[65px]",
-              { "!block": logoutWindowOpen }
-            )}
-          >
-            <button
-              onClick={() => props.onDisconnectWalletClick()}
-              className="text-text-primary text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover"
-            >
-              Disconnect Wallet
-            </button>
-          </div>
+          {logoutWindowOpen && (
+            <div className="absolute right-0 border-b border-l border-r border-border-primary rounded-b-md top-[65px]">
+              <button
+                onClick={props.onDisconnectWalletClick}
+                className="text-text-primary text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover"
+              >
+                Disconnect Wallet
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
