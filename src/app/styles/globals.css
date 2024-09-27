@@ -64,6 +64,7 @@
   --border-interactive-valid: rgba(123, 97, 255, 0.25);
 
   --background: rgba(21, 22, 23, 1);
+  --background-brand: rgba(123, 97, 255, 0.9);
   --background-primary: rgba(243, 246, 248, 0.08);
   --background-secondary: rgba(243, 246, 248, 0.05);
   --background-tertiary: rgba(243, 246, 248, 0.03);
