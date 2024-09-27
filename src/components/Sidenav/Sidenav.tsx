@@ -1,6 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { SidenavItemProps, SidenavProps } from "@/types/ui/sidenav";
+import Image from "next/image";
 
 /**
  * Sidenav component for rendering a sidebar navigation menu.
@@ -17,7 +18,7 @@ const Sidenav: React.FC<SidenavProps> = (props) => {
     <div className="h-full px-6 bg-background border-r border-r-border-primary max-w-[302px]">
       {/* Logo */}
       <a href="/" className="flex py-3 mb-6 border-b border-b-border-primary">
-        <img src="/layer_logo.svg" alt="LAYER Logo" />
+        <Image src="/layer_logo.svg" alt="LAYER Logo" />
       </a>
 
       {/* Navigation Items */}
