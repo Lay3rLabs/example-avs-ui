@@ -88,7 +88,7 @@ Tailwind CSS is used for styling the application. Configuration and custom theme
 
 ### Prerequisites
 
-- Node.js >= 14.x
+- Node.js >= 18.x
 - Yarn package manager
 
 ### Installation
