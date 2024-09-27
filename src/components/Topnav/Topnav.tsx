@@ -62,9 +62,12 @@ const Topnav: React.FC<TopnavProps> = (props) => {
           ) : (
             <button
               onClick={() => props.onConnectWalletClick()}
-              className="text-text-primary rounded-md ml-4 mr-2 text-sm py-2 px-2 font-bold hover:bg-background-interactive-hover"
+              className="text-text-primary rounded-md ml-4 mr-2 text-sm py-2 px-2 font-bold bg-background-brand flex items-center"
             >
-              Connect Wallet
+              <span className="material-icons mr-1">
+                sensors
+              </span>
+              <span>Connect to Wallet</span>
             </button>
           )}
 
