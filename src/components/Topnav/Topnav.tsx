@@ -1,7 +1,6 @@
 "use client";
 
 import { TopnavItemProps, TopnavProps } from "@/types/ui";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 /**
@@ -48,7 +47,7 @@ const Topnav: React.FC<TopnavProps> = (props) => {
                 </div>
               )}
               <div className="w-9 h-9 overflow-hidden rounded-md mr-2">
-                <Image
+                <img
                   className="max-w-full"
                   src={`https://api.dicebear.com/9.x/glass/svg?seed=${props.walletAddress}`}
                   alt="User Avatar"

@@ -9,7 +9,6 @@ import {
   ModalFooter,
 } from "@/components/Modal/Modal";
 import { WalletTypes } from "@/types";
-import Image from "next/image";
 
 // Define the wallet details with the WalletType keys
 const walletDetails: Record<WalletTypes, { icon: string; name: string }> = {
@@ -95,7 +94,7 @@ export function WalletModal({
                 className="w-full flex items-center p-3 mb-3 border border-border-primary rounded-lg transition-transform transform hover:scale-105 hover:bg-background-interactive-hover"
                 onClick={() => handleWalletClick(wallet as WalletTypes)} // Type assertion to specify wallet type
               >
-                <Image
+                <img
                   className="mr-4 w-8 h-8"
                   alt={`${walletDetails[wallet as WalletTypes].name} icon`} // Type assertion to specify wallet type
                   src={walletDetails[wallet as WalletTypes].icon} // Type assertion to specify wallet type
@@ -117,7 +116,7 @@ export function WalletModal({
                 animate={{ rotate: 360 }}
                 transition={{ ease: "linear", duration: 1, repeat: Infinity }}
               />
-              <Image
+              <img
                 className="w-12 h-12"
                 alt={`${walletDetails[loadingWallet].name} icon`}
                 src={walletDetails[loadingWallet].icon}
@@ -137,7 +136,7 @@ export function WalletModal({
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <Image
+              <img
                 className="w-12 h-12"
                 alt={`${walletDetails[connectedWallet].name} icon`}
                 src={walletDetails[connectedWallet].icon}
