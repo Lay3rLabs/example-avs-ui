@@ -26,8 +26,6 @@ It provides a sample UI for your AVS project on Layer, written in React. This is
 │   │   └── useWallet.ts        # Hook for wallet connections and interactions
 │   ├── state                   # Zustand state management logic
 │   │   └── store.ts            # Zustand store setup
-│   ├── styles
-│   │   └── tailwind.css        # Tailwind CSS import file
 │   ├── types                   # TypeScript type definitions
 │   │   └── index.d.ts          # Shared types across the project
 │   ├── utils                   # Utility functions and constants
@@ -73,9 +71,12 @@ Helper functions, constants, and other utility methods are centralized in the `s
 - **Utility Functions:** General utility functions, such as formatters and validators, are stored in `src/utils/index.ts`.
 
 ### 6. Wallet Integration (`wallets`)
+
 Wallet logic is contained in the `src/wallets` directory, providing a flexible adapter for integrating various wallets into the application.
 
-- **Wallet Adapter:** The `walletAdapter.ts` file allows for the addition of new wallets with minimal configuration.
+- **Wallet Adapter:** The `walletClient.ts` file allows for the addition of new wallets with minimal configuration.
+
+For more information on adding new wallets, please refer to the [Add Wallets Documentation](/docs/add-wallets.md).
 
 ### 7. Tailwind CSS Styling (`styles` & `tailwind.css`)
 Tailwind CSS is used for styling the application. Configuration and custom themes are defined in `tailwind.config.js`.
@@ -87,7 +88,7 @@ Tailwind CSS is used for styling the application. Configuration and custom theme
 
 ### Prerequisites
 
-- Node.js >= 14.x
+- Node.js >= 18.x
 - Yarn package manager
 
 ### Installation

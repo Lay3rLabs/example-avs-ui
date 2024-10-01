@@ -45,6 +45,7 @@ const config: Config = {
           primary: "var(--background-primary)",
           secondary: "var(--background-secondary)",
           tertiary: "var(--background-tertiary)",
+          brand: "var(--background-brand)",
           interactive: {
             hover: "var(--background-interactive-hover)",
             selected: "var(--background-interactive-selected)",

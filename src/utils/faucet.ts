@@ -25,7 +25,16 @@ export const callFaucet = async (userAddress: string) => {
     throw new Error(`Error: ${response.statusText}`);
   }
 
-  // Parse the response data as JSON and return it
-  const data = await response.json();
-  return data;
+  // Check the content type of the response
+  const contentType = response.headers.get("Content-Type");
+
+  // If response is JSON, parse it as JSON
+  if (contentType && contentType.includes("application/json")) {
+    const data = await response.json();
+    return data;
+  } else {
+    // Otherwise, parse the response as text
+    const data = await response.text();
+    return data; // In this case, it will return "ok"
+  }
 };

@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - development
   pull_request:
     branches:
       - main
+      - development
 
 jobs:
   build:
@@ -41,25 +43,36 @@ jobs:
         run: yarn install
 
       - name: Run ESLint
-        run: yarn lint
+        run: yarn lint --format json --output-file eslint-report.json
         continue-on-error: true
         id: eslint-lint
 
+      - name: Upload ESLint Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: eslint-report
+          path: eslint-report.json
+
       - name: Annotate ESLint output
-        if: always() && steps.eslint-lint.outcome == 'failure'
+        if: failure() && steps.eslint-lint.outcome == 'failure'
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: results.sarif
+          sarif_file: eslint-report.json
 
   lint-pr-comment:
-    if: ${{ github.event_name == 'pull_request' && steps.eslint-lint.outcome == 'failure' }}
     runs-on: ubuntu-latest
     needs: lint
+    if: ${{ needs.lint.result == 'failure' }}
     steps:
+      - name: Download ESLint Report
+        uses: actions/download-artifact@v3
+        with:
+          name: eslint-report
+
       - name: Lint PR Comment
         uses: thollander/actions-comment-pull-request@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           report_path: eslint-report.json
           hide_summary: true
-
