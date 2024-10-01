@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -45,6 +43,7 @@ export function WalletModal({
   const [connectedWallet, setConnectedWallet] = useState<WalletTypes | null>(
     null
   );
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   /**
    * Handles the wallet selection process.
@@ -54,10 +53,14 @@ export function WalletModal({
    */
   const handleWalletClick = async (wallet: WalletTypes) => {
     setLoadingWallet(wallet);
+    setErrorMessage(null); // Reset error message before attempting to connect
     try {
       await onWalletClick(wallet);
       setConnectedWallet(wallet);
     } catch (error) {
+      setErrorMessage(
+        `Failed to connect to ${walletDetails[wallet].name}. ${error}`
+      );
       console.error("Error connecting to wallet:", error);
     } finally {
       setLoadingWallet(null);
@@ -65,11 +68,12 @@ export function WalletModal({
   };
 
   /**
-   * Resets the loading and connected wallet state when the modal is reopened.
+   * Resets the loading, connected wallet state, and error when the modal is reopened.
    */
   useEffect(() => {
     setLoadingWallet(null);
     setConnectedWallet(null);
+    setErrorMessage(null);
   }, [open]);
 
   return (
@@ -78,15 +82,16 @@ export function WalletModal({
         <h2 className="text-xl text-text-primary font-semibold">
           {connectedWallet ? "Wallet Connected" : "Connect Wallet"}
         </h2>
-        {!connectedWallet && (
+        {!connectedWallet && !errorMessage && (
           <p className="text-text-secondary">
             Start by connecting with one of the wallets below.
           </p>
         )}
+        {errorMessage && <p className="text-red-600">{errorMessage}</p>}
       </ModalHeader>
       <ModalBody>
         {/* Display available wallets if no wallet is loading or connected */}
-        {!loadingWallet && !connectedWallet && (
+        {!loadingWallet && !connectedWallet && !errorMessage && (
           <div>
             {Object.keys(walletDetails).map((wallet) => (
               <button

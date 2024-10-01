@@ -41,10 +41,18 @@ const connectWalletGeneric = async (
   walletType: WalletTypes
 ) => {
   if (walletClient instanceof Keplr) {
+    // @ts-expect-error
+    if (!window.keplr) {
+      throw new Error("Keplr is not installed!");
+    }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     await window.keplr.experimentalSuggestChain(chainRegistryEntry);
   } else if (walletClient instanceof Leap) {
+    // @ts-expect-error
+    if (!window.leap) {
+      throw new Error("Leap is not installed!");
+    }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     await window.leap.experimentalSuggestChain(chainRegistryEntry);
