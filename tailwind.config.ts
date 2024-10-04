@@ -20,7 +20,9 @@ const config: Config = {
           tertiary: "var(--text-tertiary)",
           brand: "var(--text-brand)",
           interactive: {
+            button: "var(--text-button)",
             disabled: "var(--text-disabled)",
+            warning: "var(--text-interactive-warning)",
             active: "var(--text-interactive-active)",
             error: "var(--text-interactive-error)",
             valid: "var(--text-interactive-valid)",
@@ -46,6 +48,7 @@ const config: Config = {
           secondary: "var(--background-secondary)",
           tertiary: "var(--background-tertiary)",
           brand: "var(--background-brand)",
+          button: "var(--background-button)",
           interactive: {
             hover: "var(--background-interactive-hover)",
             selected: "var(--background-interactive-selected)",
@@ -53,6 +56,7 @@ const config: Config = {
             disabled: "var(--background-interactive-disabled)",
             active: "var(--background-interactive-active)",
             error: "var(--background-interactive-error)",
+            warning: "var(--background-interactive-warning)",
             valid: "var(--background-interactive-valid)",
           },
         },

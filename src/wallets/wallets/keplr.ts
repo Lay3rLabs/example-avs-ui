@@ -17,7 +17,7 @@ import {
   SuggestToken,
   Wallet,
 } from "@/types";
-import { MainnetConfig } from "@/utils";
+import { TestnetConfig } from "@/utils";
 
 /**
  * Keplr class provides methods for interacting with the Keplr wallet.
@@ -71,10 +71,10 @@ export class Keplr implements Wallet {
    */
   async getSigningCosmWasmClient(): Promise<SigningCosmWasmClient> {
     return SigningCosmWasmClient.connectWithSigner(
-      MainnetConfig.rpc_endpoint,
-      this.getOfflineSigner(MainnetConfig.chain_id),
+      TestnetConfig.rpc_endpoint,
+      this.getOfflineSigner(TestnetConfig.chain_id),
       {
-        gasPrice: GasPrice.fromString("0.025uslay"),
+        gasPrice: GasPrice.fromString("0.025uperm"),
       }
     );
   }
@@ -86,10 +86,10 @@ export class Keplr implements Wallet {
    */
   async getSigningStargateClient(): Promise<SigningStargateClient> {
     return SigningStargateClient.connectWithSigner(
-      MainnetConfig.rpc_endpoint,
-      this.getOfflineSigner(MainnetConfig.chain_id),
+      TestnetConfig.rpc_endpoint,
+      this.getOfflineSigner(TestnetConfig.chain_id),
       {
-        gasPrice: GasPrice.fromString("0.025uslay"),
+        gasPrice: GasPrice.fromString("0.025uperm"),
       }
     );
   }

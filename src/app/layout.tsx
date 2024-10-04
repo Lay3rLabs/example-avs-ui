@@ -5,12 +5,13 @@ import { Inter } from "next/font/google";
 import Sidenav from "@/components/Sidenav/Sidenav";
 import Topnav from "@/components/Topnav/Topnav";
 import { WalletModal } from "@/components/WalletModal/WalletModal";
-import { useState } from "react";
-import { useAppStore } from "@/state/store";
+import { useEffect, useState } from "react";
+import { rehydrateClient, useAppStore } from "@/state/store";
 import { WalletTypes } from "@/types";
 import { FaucetModal } from "@/components/FaucetModal/FaucetModal";
 import { fetchUserBalance } from "@/utils/cosmjs/user/fetchUserBalance";
-import { callFaucet, microAmountToAmount } from "@/utils";
+import { callFaucet, microAmountToAmount, taskQueueAddresses } from "@/utils";
+import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,8 @@ export default function RootLayout({
   // App store for wallet states
   const appStore = useAppStore();
 
+  const pathname = usePathname();
+
   /**
    * Connect to the selected wallet.
    *
@@ -54,7 +57,7 @@ export default function RootLayout({
    * @returns {Promise<Object>} The fetched balance object.
    */
   const fetchBalance = async (userAddress: string) => {
-    const balance = await fetchUserBalance(userAddress, "uslay");
+    const balance = await fetchUserBalance(userAddress, "uperm");
     setUserBalance(Number(microAmountToAmount(balance.amount, 6)));
     return balance;
   };
@@ -87,25 +90,29 @@ export default function RootLayout({
     await fetchBalance(appStore.wallet.address);
   };
 
+  // Rehydrate cosmwasm client after page reload
+  useEffect(() => {
+    rehydrateClient();
+  }, []);
+
+  // Fetch balance on wallet address change
+  useEffect(() => {
+    if (appStore.wallet.address) {
+      fetchBalance(appStore.wallet.address);
+    }
+  }, [appStore.wallet.address]);
+
   return (
     <html lang="en">
       <body className={`${inter.className} dark antialiased`}>
         <div className="flex h-[calc(100vh-32px)]">
           <Sidenav
-            navItems={[
-              {
-                label: "Nav Item 1",
-                icon: "arrow_forward_ios",
-                active: true,
-                href: "#",
-              },
-              {
-                label: "Nav Item 2",
-                icon: "arrow_forward_ios",
-                active: false,
-                href: "#",
-              },
-            ]}
+            navItems={taskQueueAddresses.map((item) => ({
+              label: item.title,
+              icon: "arrow_forward_ios",
+              active: pathname.includes(item.address),
+              href: `/avs/oracle/${item.address}`,
+            }))}
           />
           <div className="w-full">
             <Topnav
@@ -113,18 +120,10 @@ export default function RootLayout({
               onConnectWalletClick={() => setWalletModalOpen(true)}
               onDisconnectWalletClick={() => appStore.disconnectWallet()}
               navItems={[
-                {
-                  label: "Services",
-                  href: "#",
-                },
-                {
-                  label: "AI Agents",
-                  href: "#",
-                },
-                {
-                  label: "Steven",
-                  href: "#",
-                },
+                "Services",
+                taskQueueAddresses.find((task) =>
+                  pathname.includes(task.address)
+                )?.title || "",
               ]}
               userBalance={userBalance}
             />
