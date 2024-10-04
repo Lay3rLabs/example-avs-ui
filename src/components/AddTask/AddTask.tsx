@@ -66,6 +66,9 @@ const SubmitTask = ({
   return (
     <form onSubmit={handleSubmit}>
       <Card>
+        <div className="bg-background-primary border border-border-primary rounded-md p-1 inline-flex justify-center items-center">
+          <span className="material-icons text-text-primary">calculate</span>
+        </div>
         <p className="text-text-primary font-semibold mb-1">Compute Squares</p>
         <p className="text-text-brand text-[13px] mb-5 !mt-0">Math Function</p>
         <p className="text-text-tertiary text-[12px]">Enter a number:</p>
@@ -78,7 +81,11 @@ const SubmitTask = ({
             onChange={(e) => setTaskInput(e.target.value)}
             disabled={isSubmitting}
           />
-          <button className="text-sm bg-background-button text-text-interactive-button rounded-md px-3 h-[34px]" type="submit" disabled={isSubmitting || taskInput.trim() === ""}>
+          <button
+            className="text-sm bg-background-button text-text-interactive-button rounded-md px-3 h-[34px]"
+            type="submit"
+            disabled={isSubmitting || taskInput.trim() === ""}
+          >
             {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </div>
