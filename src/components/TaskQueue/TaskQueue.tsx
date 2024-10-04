@@ -12,6 +12,14 @@ const customTheme = {
   },
 };
 
+/**
+ * TaskQueue component displays a list of tasks in the task queue along with their details.
+ * It provides the ability to expand a task entry to show more detailed information in JSON format.
+ *
+ * @param {TaskQueueProps & React.HTMLAttributes<HTMLDivElement>} props - Props including task queue entries and HTML div attributes.
+ *
+ * @returns {JSX.Element} The TaskQueue component that renders the task list and allows for expanding task details.
+ */
 const TaskQueue: React.FC<
   TaskQueueProps & React.HTMLAttributes<HTMLDivElement>
 > = ({ entries, ...props }) => {
@@ -19,6 +27,12 @@ const TaskQueue: React.FC<
     undefined
   );
 
+   /**
+   * Toggles the expansion of the task entry to show more details.
+   * If the task entry is already expanded, it will collapse; otherwise, it will expand.
+   *
+   * @param {string} id - The ID of the task entry to expand or collapse.
+   */
   const handleToggleExpand = (id: string) => {
     setExpandedEntry((prevId) => (prevId === id ? undefined : id));
   };
