@@ -53,7 +53,7 @@ const TaskQueue: React.FC<
               >
                 <div className="flex gap-4 items-center">
                   <p className="min-w-[150px] text-sm text-text-body">
-                    {entry.id.slice(0, 4)}...{entry.id.slice(-4)}
+                    {entry.id}
                   </p>
                   <p className="min-w-[150px]">
                     <span
