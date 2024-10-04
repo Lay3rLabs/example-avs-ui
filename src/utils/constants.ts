@@ -30,6 +30,16 @@ export const taskQueueAddress =
   "layer1nmv2maum4qqz85trqt9dhh7wgzwdvhuy9zkgtwkhstq392xnhm9s7j9h38";
 
 /**
+ * The title is used for navigation
+ */
+export const taskQueueAddresses: { title: string; address: string }[] = [
+  {
+    title: "Square Task",
+    address: "layer1nmv2maum4qqz85trqt9dhh7wgzwdvhuy9zkgtwkhstq392xnhm9s7j9h38",
+  },
+];
+
+/**
  * Chain registry entry for the Layer testnet.
  * This configuration can be used to register the Layer chain in wallets and other applications.
  */
