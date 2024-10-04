@@ -16,12 +16,14 @@
     "@cosmjs/amino": "^0.32.4",
     "@cosmjs/cosmwasm-stargate": "^0.32.4",
     "@keplr-wallet/types": "^0.12.129",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "chain-registry": "^1.63.100",
     "framer-motion": "^11.7.0",
     "material-icons": "^1.13.12",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
+    "react-syntax-highlighter": "^15.5.0",
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
