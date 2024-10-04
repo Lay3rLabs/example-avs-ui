@@ -53,5 +53,5 @@ export const fetchTasks = async (taskQueueAddressCustom?: string) => {
   const tasksOpenConverted = convertTasksToTaskQueueEntryProps(tasksOpen.tasks);
 
   // Merge both types
-  return [...tasksCompletedConverted, ...tasksOpenConverted];
+  return [...tasksOpenConverted, ...tasksCompletedConverted];
 };
