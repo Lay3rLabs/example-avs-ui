@@ -29,7 +29,7 @@ export interface YourContractReadOnlyInterface {
   config: () => Promise<ConfigResponse>;
 }
 
-export class YourContractQueryClient implements YourContractReadOnlyInterface {
+export class TaskQueueQueryClient implements YourContractReadOnlyInterface {
   client: CosmWasmClient;
   contractAddress: string;
 

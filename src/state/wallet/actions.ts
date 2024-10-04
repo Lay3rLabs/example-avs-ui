@@ -6,7 +6,7 @@ import {
   WalletActions,
   WalletTypes,
 } from "@/types";
-import { chainRegistryEntry, MainnetConfig } from "@/utils";
+import { chainRegistryEntry, TestnetConfig } from "@/utils";
 import { getWalletClient, Keplr, Leap } from "@/wallets";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { useAppStore } from "../store";
@@ -85,7 +85,7 @@ export const createWalletActions = (
     // Function to connect wallet
     connectWallet: async (walletId: WalletTypes) => {
       // Determine environment configuration
-      const envConfig = MainnetConfig;
+      const envConfig = TestnetConfig;
 
       const walletClient = await getWalletClient(walletId);
 
