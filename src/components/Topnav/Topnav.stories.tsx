@@ -17,20 +17,7 @@ export const WalletConnected: Story = {
     walletAddress: "GARX7YOCGEIOA5YQXCHA6ZM7764KLCFRVTTQJQZMPLJPCZKHY4KATVM3",
     onConnectWalletClick: () => {},
     onDisconnectWalletClick: () => {},
-    navItems: [
-      {
-        label: "Services",
-        href: "#",
-      },
-      {
-        label: "AI Agents",
-        href: "#",
-      },
-      {
-        label: "Steven",
-        href: "#",
-      },
-    ],
+    navItems: ["Services", "Foo"]
   },
 };
 
@@ -39,19 +26,6 @@ export const WalletNotConnected: Story = {
     walletAddress: undefined,
     onConnectWalletClick: () => {},
     onDisconnectWalletClick: () => {},
-    navItems: [
-      {
-        label: "Services",
-        href: "#",
-      },
-      {
-        label: "AI Agents",
-        href: "#",
-      },
-      {
-        label: "Steven",
-        href: "#",
-      },
-    ],
+    navItems: ["Services", "Foo"],
   },
 };

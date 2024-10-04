@@ -27,20 +27,7 @@ const DemoLayout = () => {
           onConnectWalletClick={() => {}}
           userBalance={0}
           onDisconnectWalletClick={() => {}}
-          navItems={[
-            {
-              label: "Services",
-              href: "#",
-            },
-            {
-              label: "AI Agents",
-              href: "#",
-            },
-            {
-              label: "Steven",
-              href: "#",
-            },
-          ]}
+          navItems={["Service", "Foo"]}
         />
       </div>
     </div>
