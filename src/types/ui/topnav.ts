@@ -1,10 +1,5 @@
-export interface TopnavItemProps {
-  label: string;
-  href: string;
-}
-
 export interface TopnavProps {
-  navItems: TopnavItemProps[];
+  navItems: string[];
   walletAddress: string | undefined;
   onConnectWalletClick: () => void;
   onDisconnectWalletClick: () => void;
