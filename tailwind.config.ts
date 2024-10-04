@@ -20,6 +20,7 @@ const config: Config = {
           tertiary: "var(--text-tertiary)",
           brand: "var(--text-brand)",
           interactive: {
+            button: "var(--text-button)",
             disabled: "var(--text-disabled)",
             warning: "var(--text-interactive-warning)",
             active: "var(--text-interactive-active)",
@@ -47,6 +48,7 @@ const config: Config = {
           secondary: "var(--background-secondary)",
           tertiary: "var(--background-tertiary)",
           brand: "var(--background-brand)",
+          button: "var(--background-button)",
           interactive: {
             hover: "var(--background-interactive-hover)",
             selected: "var(--background-interactive-selected)",
