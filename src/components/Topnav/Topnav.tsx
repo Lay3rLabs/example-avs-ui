@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { TopnavItemProps, TopnavProps } from "@/types/ui";
+import { TopnavProps } from "@/types/ui";
 import React, { useEffect, useState } from "react";
 
 /**
@@ -23,12 +23,12 @@ const Topnav: React.FC<TopnavProps> = (props) => {
       <div className="border-b border-b-border-primary flex">
         <ul className="space-x-2 font-medium flex py-[18px] flex-1">
           {props.navItems &&
-            props.navItems.map((item: TopnavItemProps, index: number) => (
+            props.navItems.map((item: string, index: number) => (
               <li key={index}>
                 <div className="flex items-center mr-3">
-                  <a className="text-text-primary font-semibold text-xl cursor-pointer select-none hover:underline">
-                    {item.label}
-                  </a>
+                  <p className="text-text-primary font-semibold text-xl cursor-pointer select-none hover:underline">
+                    {item}
+                  </p>
                   {index < props.navItems.length - 1 && (
                     <span className="material-icons text-background-interactive-hover ml-3">
                       arrow_forward_ios
