@@ -91,7 +91,7 @@ export const createWalletActions = (
 
       await connectWalletGeneric(walletClient, envConfig, walletId);
 
-      // TODO: Set persist store
+      useAppStore.persist.rehydrate();
     },
     // Function to disconnect wallet (placeholder)
     disconnectWallet: () => {
@@ -105,7 +105,7 @@ export const createWalletActions = (
         cosmWasmSigningClient: undefined,
       }));
 
-      // TODO: Unset persist store
+      useAppStore.persist.clearStorage();
     },
 
     // TODO Fetch token
