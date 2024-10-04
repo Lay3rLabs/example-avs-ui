@@ -16,11 +16,28 @@ export default function Home() {
 
   useEffect(() => {
     getTasks();
+
+    const intervalId = setInterval(() => {
+      getTasks();
+    }, 3000); 
+
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
+
   return (
     <div>
-      <SubmitTask />
-      <TaskQueue entries={taskQueue} />
+      <section>
+        <h1 className="font-bold text-text-primary text-[26px] mb-4">Services</h1>
+        <div className="grid grid-cols-4 gap-4 pb-[40px] mb-[40px] border-b border-border-primary">
+          <SubmitTask />
+        </div>
+      </section>
+      <section>
+        <h1 className="font-bold text-text-primary text-[26px] mb-4">Task Queue</h1>
+        <TaskQueue entries={taskQueue} />
+      </section>
     </div>
   );
 }
