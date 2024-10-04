@@ -21,6 +21,7 @@ const config: Config = {
           brand: "var(--text-brand)",
           interactive: {
             disabled: "var(--text-disabled)",
+            warning: "var(--text-interactive-warning)",
             active: "var(--text-interactive-active)",
             error: "var(--text-interactive-error)",
             valid: "var(--text-interactive-valid)",
@@ -53,6 +54,7 @@ const config: Config = {
             disabled: "var(--background-interactive-disabled)",
             active: "var(--background-interactive-active)",
             error: "var(--background-interactive-error)",
+            warning: "var(--background-interactive-warning)",
             valid: "var(--background-interactive-valid)",
           },
         },
