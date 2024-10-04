@@ -34,11 +34,8 @@
   /* interactive */
   --background-interactive-hover: rgba(36, 39, 40, 0.1);
   --background-interactive-selected: rgba(36, 39, 40, 0.15);
-  --background-interactive-warning: rgba(215, 147, 73, 0.15);
-  --background-interactive-valid: rgba(57, 166, 153, 0.1);
   --background-interactive-pressed: rgba(36, 39, 40, 0.15);
   --background-interactive-disabled: rgba(36, 39, 40, 0.03);
-  --background-interactive-error: rgba(199, 62, 89, 0.15);
 }
 
 .dark {
@@ -50,7 +47,6 @@
   /* interactive */
   --text-disabled: rgba(243, 246, 248, 0.2);
   --text-interactive-active: rgba(179, 160, 255, 0.95);
-  --text-interactive-warning: rgba(215, 147, 73, 0.95);
   --text-interactive-error: rgba(199, 62, 89, 0.95);
   --text-interactive-valid: rgba(57, 166, 153, 0.95);
   --text-interactive-brand-disabled: rgba(57, 166, 153, 0.95);
@@ -83,11 +79,6 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Inter, Arial, Helvetica, sans-serif;
-}
-
-.code-highlighter pre {
-  background: rgba(17, 18, 25, 1) !important;
-  border-radius: 6px;
 }
 
 @layer utilities {
