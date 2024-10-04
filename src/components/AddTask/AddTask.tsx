@@ -3,7 +3,11 @@ import { useAppStore } from "@/state/store";
 import { taskQueueAddress } from "@/utils";
 import React, { useState } from "react";
 
-const SubmitTask: React.FC = () => {
+const SubmitTask: React.FC = ({
+  taskQueueAddressCustom,
+}: {
+  taskQueueAddressCustom?: string;
+}) => {
   const [taskInput, setTaskInput] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -21,7 +25,7 @@ const SubmitTask: React.FC = () => {
     const taskQueueClient = new TaskQueueClient(
       appStore.cosmWasmSigningClient!,
       appStore.wallet.address,
-      taskQueueAddress
+      taskQueueAddressCustom ? taskQueueAddressCustom : taskQueueAddress
     );
     if (isNaN(taskValue)) {
       setErrorMessage("Please enter a valid number.");
