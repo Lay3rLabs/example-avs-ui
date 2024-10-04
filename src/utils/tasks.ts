@@ -33,13 +33,13 @@ export const convertTasksToTaskQueueEntryProps = (
   });
 };
 
-export const fetchTasks = async () => {
+export const fetchTasks = async (taskQueueAddressCustom?: string) => {
   const cosmWasmClient = await CosmWasmClient.connect(
     TestnetConfig.rpc_endpoint
   );
   const taskQueueQueryClient = new LayerTaskQueue.TaskQueueQueryClient(
     cosmWasmClient,
-    taskQueueAddress
+    taskQueueAddressCustom ? taskQueueAddressCustom : taskQueueAddress
   );
 
   // Get completed tasks
