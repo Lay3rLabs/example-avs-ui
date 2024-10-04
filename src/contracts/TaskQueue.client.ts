@@ -1,4 +1,8 @@
-import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import {
+  CosmWasmClient,
+  SigningCosmWasmClient,
+  ExecuteResult,
+} from "@cosmjs/cosmwasm-stargate";
 import {
   TaskResponse,
   ListOpenResponse,
@@ -6,8 +10,9 @@ import {
   TaskStatusResponse,
   ConfigResponse,
 } from "./TaskQueue.types";
+import { Coin, StdFee } from "@cosmjs/amino";
 
-export interface YourContractReadOnlyInterface {
+export interface TaskQueueReadOnlyInterface {
   contractAddress: string;
 
   task: ({ id }: { id: string }) => Promise<TaskResponse>;
@@ -29,7 +34,48 @@ export interface YourContractReadOnlyInterface {
   config: () => Promise<ConfigResponse>;
 }
 
-export class TaskQueueQueryClient implements YourContractReadOnlyInterface {
+export interface TaskQueueInterface extends TaskQueueReadOnlyInterface {
+  createTask: (
+    {
+      description,
+      payload,
+      timeout,
+    }: {
+      description: string;
+      payload: { [key: string]: unknown };
+      timeout?: number | null;
+    },
+    fee?: number | StdFee | "auto",
+    memo?: string,
+    funds?: Coin[]
+  ) => Promise<ExecuteResult>;
+
+  completeTask: (
+    {
+      taskId,
+      response,
+    }: {
+      taskId: string;
+      response: { [key: string]: unknown };
+    },
+    fee?: number | StdFee | "auto",
+    memo?: string,
+    funds?: Coin[]
+  ) => Promise<ExecuteResult>;
+
+  timeoutTask: (
+    {
+      taskId,
+    }: {
+      taskId: string;
+    },
+    fee?: number | StdFee | "auto",
+    memo?: string,
+    funds?: Coin[]
+  ) => Promise<ExecuteResult>;
+}
+
+export class TaskQueueQueryClient implements TaskQueueReadOnlyInterface {
   client: CosmWasmClient;
   contractAddress: string;
 
@@ -46,17 +92,13 @@ export class TaskQueueQueryClient implements YourContractReadOnlyInterface {
 
   task = async ({ id }: { id: string }): Promise<TaskResponse> => {
     return this.client.queryContractSmart(this.contractAddress, {
-      task: {
-        id,
-      },
+      task: { id },
     });
   };
 
   taskStatus = async ({ id }: { id: string }): Promise<TaskStatusResponse> => {
     return this.client.queryContractSmart(this.contractAddress, {
-      task_status: {
-        id,
-      },
+      task_status: { id },
     });
   };
 
@@ -68,10 +110,7 @@ export class TaskQueueQueryClient implements YourContractReadOnlyInterface {
     limit?: number;
   }): Promise<ListOpenResponse> => {
     return this.client.queryContractSmart(this.contractAddress, {
-      list_open: {
-        start_after,
-        limit,
-      },
+      list_open: { start_after, limit },
     });
   };
 
@@ -83,10 +122,7 @@ export class TaskQueueQueryClient implements YourContractReadOnlyInterface {
     limit?: number;
   }): Promise<ListCompletedResponse> => {
     return this.client.queryContractSmart(this.contractAddress, {
-      list_completed: {
-        start_after,
-        limit,
-      },
+      list_completed: { start_after, limit },
     });
   };
 
@@ -94,5 +130,108 @@ export class TaskQueueQueryClient implements YourContractReadOnlyInterface {
     return this.client.queryContractSmart(this.contractAddress, {
       config: {},
     });
+  };
+}
+
+export class TaskQueueClient
+  extends TaskQueueQueryClient
+  implements TaskQueueInterface
+{
+  client: SigningCosmWasmClient;
+  sender: string;
+
+  constructor(
+    client: SigningCosmWasmClient,
+    sender: string,
+    contractAddress: string
+  ) {
+    super(client, contractAddress);
+    this.client = client;
+    this.sender = sender;
+
+    this.createTask = this.createTask.bind(this);
+    this.completeTask = this.completeTask.bind(this);
+    this.timeoutTask = this.timeoutTask.bind(this);
+  }
+
+  createTask = async (
+    {
+      description,
+      payload,
+      timeout,
+    }: {
+      description: string;
+      payload: { [key: string]: unknown };
+      timeout?: number | null;
+    },
+    fee: number | StdFee | "auto" = "auto",
+    memo?: string,
+    funds?: Coin[]
+  ): Promise<ExecuteResult> => {
+    return this.client.execute(
+      this.sender,
+      this.contractAddress,
+      {
+        create: {
+          description,
+          payload,
+          timeout,
+        },
+      },
+      fee,
+      memo,
+      funds
+    );
+  };
+
+  completeTask = async (
+    {
+      taskId,
+      response,
+    }: {
+      taskId: string;
+      response: { [key: string]: unknown };
+    },
+    fee: number | StdFee | "auto" = "auto",
+    memo?: string,
+    funds?: Coin[]
+  ): Promise<ExecuteResult> => {
+    return this.client.execute(
+      this.sender,
+      this.contractAddress,
+      {
+        complete: {
+          task_id: taskId,
+          response,
+        },
+      },
+      fee,
+      memo,
+      funds
+    );
+  };
+
+  timeoutTask = async (
+    {
+      taskId,
+    }: {
+      taskId: string;
+    },
+    fee: number | StdFee | "auto" = "auto",
+    memo?: string,
+    funds?: Coin[]
+  ): Promise<ExecuteResult> => {
+    return this.client.execute(
+      this.sender,
+      this.contractAddress,
+      {
+        timeout: {
+          task_id: taskId,
+        },
+      },
+      fee,
+      memo,
+      funds
+    );
   };
 }

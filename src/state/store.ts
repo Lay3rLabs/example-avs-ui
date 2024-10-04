@@ -2,6 +2,9 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { AppStore } from "../types";
 import { createWalletActions } from "./wallet/actions";
+import { getWalletClient } from "@/wallets";
+import { TestnetConfig } from "@/utils";
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
 export const useAppStore = create<AppStore>()(
   persist(
@@ -19,3 +22,23 @@ export const useAppStore = create<AppStore>()(
     }
   )
 );
+
+export const rehydrateClient = async () => {
+  const { wallet } = useAppStore.getState();
+
+  if (wallet.isConnected && wallet.address) {
+    const walletClient = await getWalletClient(wallet.type);
+    const envConfig = TestnetConfig;
+
+    if (walletClient) {
+      await walletClient.enable(envConfig.chain_id);
+      const cosmWasmClient: SigningCosmWasmClient =
+        await walletClient.getSigningCosmWasmClient();
+
+      useAppStore.setState((state: AppStore) => ({
+        ...state,
+        cosmWasmSigningClient: cosmWasmClient,
+      }));
+    }
+  }
+};

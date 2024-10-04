@@ -5,8 +5,8 @@ import { Inter } from "next/font/google";
 import Sidenav from "@/components/Sidenav/Sidenav";
 import Topnav from "@/components/Topnav/Topnav";
 import { WalletModal } from "@/components/WalletModal/WalletModal";
-import { useState } from "react";
-import { useAppStore } from "@/state/store";
+import { useEffect, useState } from "react";
+import { rehydrateClient, useAppStore } from "@/state/store";
 import { WalletTypes } from "@/types";
 import { FaucetModal } from "@/components/FaucetModal/FaucetModal";
 import { fetchUserBalance } from "@/utils/cosmjs/user/fetchUserBalance";
@@ -86,6 +86,18 @@ export default function RootLayout({
 
     await fetchBalance(appStore.wallet.address);
   };
+
+  // Rehydrate cosmwasm client after page reload
+  useEffect(() => {
+    rehydrateClient();
+  }, []);
+
+  // Fetch balance on wallet address change
+  useEffect(() => {
+    if (appStore.wallet.address) {
+      fetchBalance(appStore.wallet.address);
+    }
+  }, [appStore.wallet.address]);
 
   return (
     <html lang="en">
