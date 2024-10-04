@@ -4,6 +4,8 @@ import Service from "./service";
 /**
  * Generates static parameters for each task queue address.
  * This is used by Next.js to statically generate pages for each task queue address at build time.
+ * 
+ * Interactive functionality was moved to service.ts due to conflicts between use client and generateStaticParams
  *
  * @returns {Array<{ address: string }>} An array of objects containing the task queue addresses to be used as route parameters.
  */
