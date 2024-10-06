@@ -78,6 +78,8 @@ export interface ConfigResponse {
   requestor: Requestor;
   timeout: TimeoutConfig;
   verifier: string;
+  title: string;
+  description: string;
 }
 export interface TimeoutConfig {
   default: number;

@@ -8,7 +8,7 @@ import { taskQueueAddress, TestnetConfig } from "./constants";
 import { LayerTaskQueue } from "@/contracts";
 
 export const convertTasksToTaskQueueEntryProps = (
-  tasks: (OpenTaskOverview | CompletedTaskOverview)[]
+  tasks: (OpenTaskOverview | CompletedTaskOverview)[],
 ): TaskQueueEntryProps[] => {
   return tasks.map((task) => {
     if ("expires" in task) {
@@ -35,17 +35,17 @@ export const convertTasksToTaskQueueEntryProps = (
 
 export const fetchTasks = async (taskQueueAddressCustom?: string) => {
   const cosmWasmClient = await CosmWasmClient.connect(
-    TestnetConfig.rpc_endpoint
+    TestnetConfig.rpc_endpoint,
   );
   const taskQueueQueryClient = new LayerTaskQueue.TaskQueueQueryClient(
     cosmWasmClient,
-    taskQueueAddressCustom ? taskQueueAddressCustom : taskQueueAddress
+    taskQueueAddressCustom ? taskQueueAddressCustom : taskQueueAddress,
   );
 
   // Get completed tasks
   const tasksCompleted = await taskQueueQueryClient.listCompleted({});
   const tasksCompletedConverted = convertTasksToTaskQueueEntryProps(
-    tasksCompleted.tasks
+    tasksCompleted.tasks,
   );
 
   // Get open tasks
@@ -54,4 +54,17 @@ export const fetchTasks = async (taskQueueAddressCustom?: string) => {
 
   // Merge both types
   return [...tasksOpenConverted, ...tasksCompletedConverted];
+};
+
+export const fetchConfig = async (taskQueueAddress: string) => {
+  const cosmWasmClient = await CosmWasmClient.connect(
+    TestnetConfig.rpc_endpoint,
+  );
+  const taskQueueQueryClient = new LayerTaskQueue.TaskQueueQueryClient(
+    cosmWasmClient,
+    taskQueueAddress,
+  );
+
+  // Get config
+  return await taskQueueQueryClient.config();
 };

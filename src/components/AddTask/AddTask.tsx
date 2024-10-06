@@ -15,8 +15,12 @@ import { Card } from "../Card/Card";
  */
 const SubmitTask = ({
   taskQueueAddressCustom,
+  title = "AVS",
+  description = "Input to submit to service.",
 }: {
   taskQueueAddressCustom?: string;
+  title?: string;
+  description?: string;
 }) => {
   const [taskInput, setTaskInput] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -43,7 +47,7 @@ const SubmitTask = ({
     const taskQueueClient = new TaskQueueClient(
       appStore.cosmWasmSigningClient!,
       appStore.wallet.address,
-      taskQueueAddressCustom ? taskQueueAddressCustom : taskQueueAddress
+      taskQueueAddressCustom ? taskQueueAddressCustom : taskQueueAddress,
     );
 
     // Validate the input value
@@ -68,7 +72,7 @@ const SubmitTask = ({
         },
         "auto",
         undefined,
-        [{ amount: "1000000", denom: "uperm" }]
+        [{ amount: "1000000", denom: "uperm" }],
       );
 
       setTaskInput(""); // Clear the input field on successful submission
@@ -84,12 +88,12 @@ const SubmitTask = ({
     <form onSubmit={handleSubmit}>
       <Card>
         <div className="bg-background-primary border border-border-primary rounded-md p-1 inline-flex justify-center items-center">
-          <span className="material-icons text-text-primary">calculate</span>
+          <span className="material-icons text-text-primary">computer</span>
         </div>
-        <p className="text-text-primary font-semibold mb-1">Compute Squares</p>
-        <p className="text-text-brand text-[13px] mb-5 !mt-0">Math Function</p>
-        <p className="text-text-tertiary text-[12px]">Enter a number:</p>
-        <div className="flex !mt-1 gap-2">
+        <p className="text-text-primary font-semibold mb-1">{title}</p>
+        {/* <p className="text-text-brand text-[13px] mb-5 !mt-0">Math Function</p> */}
+        <p className="text-text-tertiary text-[12px]">{description}</p>
+        <div className="flex gap-2">
           <input
             id="task-input"
             type="text"

@@ -29,12 +29,21 @@ export const faucetAddress = "https://faucet.layer-p.net/credit";
 export const taskQueueAddress =
   "layer1nmv2maum4qqz85trqt9dhh7wgzwdvhuy9zkgtwkhstq392xnhm9s7j9h38";
 
+// TODO expland this struct? Only Addresses?
 /**
  * The title is used for navigation
  */
 export const taskQueueAddresses: { title: string; address: string }[] = [
   {
-    title: "Square Task",
+    title: "Math",
+    address: "layer1adne8cths44gcpggjfvc47p7a94hdykry9vafw43egj7l37tyy8s8lzl9h",
+  },
+  {
+    title: "EVM Query",
+    address: "layer1nmv2maum4qqz85trqt9dhh7wgzwdvhuy9zkgtwkhstq392xnhm9s7j9h38",
+  },
+  {
+    title: "AI Agent",
     address: "layer1nmv2maum4qqz85trqt9dhh7wgzwdvhuy9zkgtwkhstq392xnhm9s7j9h38",
   },
 ];

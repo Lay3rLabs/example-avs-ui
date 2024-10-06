@@ -111,7 +111,7 @@ export default function RootLayout({
               label: item.title,
               icon: "arrow_forward_ios",
               active: pathname.includes(item.address),
-              href: `/avs/oracle/${item.address}`,
+              href: `/service/${item.address}`,
             }))}
           />
           <div className="w-full">

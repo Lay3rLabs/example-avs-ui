@@ -1,19 +1,19 @@
-import { taskQueueAddresses } from "@/utils";
+/* import { taskQueueAddresses } from "@/utils"; */
 import Service from "./service";
 
 /**
  * Generates static parameters for each task queue address.
  * This is used by Next.js to statically generate pages for each task queue address at build time.
- * 
+ *
  * Interactive functionality was moved to service.ts due to conflicts between use client and generateStaticParams
  *
  * @returns {Array<{ address: string }>} An array of objects containing the task queue addresses to be used as route parameters.
  */
-export function generateStaticParams() {
-  return taskQueueAddresses.map((item) => ({
-    address: item.address,
-  }));
-}
+/* export function generateStaticParams() {
+ *   return taskQueueAddresses.map((item) => ({
+ *     address: item.address,
+ *   }));
+ * } */
 
 /**
  * Page component renders the Service component with the task queue address.
