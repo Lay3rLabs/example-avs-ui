@@ -47,6 +47,13 @@
   --text-secondary: rgba(243, 246, 248, 0.7);
   --text-tertiary: rgba(243, 246, 248, 0.5);
   --text-brand: rgba(123, 97, 255, 0.95);
+
+  /* Status Colors */
+  --text-status-purple: rgba(123, 97, 255, 0.95);
+  --text-status-green: rgba(57, 166, 153, 0.95);
+  --text-status-yellow: rgba(215, 147, 73, 0.95);
+  --text-status-red: rgba(199, 62, 89, 0.95);
+
   /* interactive */
   --text-disabled: rgba(243, 246, 248, 0.2);
   --text-interactive-active: rgba(179, 160, 255, 0.95);
@@ -79,6 +86,13 @@
   --background-interactive-selected: rgba(243, 246, 248, 0.15);
   --background-interactive-pressed: rgba(243, 246, 248, 0.15);
   --background-interactive-disabled: rgba(243, 246, 248, 0.03);
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
