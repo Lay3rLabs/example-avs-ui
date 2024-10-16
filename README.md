@@ -112,7 +112,11 @@ To start the development server, run:
 ```bash
 yarn dev
 ```
-This will launch the app at `http://localhost:3000`. Changes in the source files will automatically reload the browser.
+This will launch the app at `http://localhost:3000` in testnet mode. To run the app in localnet mode, use:
+```bash
+yarn dev:local
+```
+
 
 ### Static Export
 
