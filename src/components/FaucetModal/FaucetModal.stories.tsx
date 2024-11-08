@@ -9,7 +9,6 @@ const meta: Meta<typeof FaucetModal> = {
   argTypes: {
     open: { control: "boolean" },
     setOpen: { action: "setOpen" },
-    requestTokens: { action: "requestTokens" },
   },
 };
 
@@ -25,12 +24,6 @@ export const DefaultFaucetModal: Story = {
   render: (args) => {
     const [isOpen, setIsOpen] = useState(args.open);
 
-    // Simulated async function to request tokens
-    const mockRequestTokens = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      args.requestTokens();
-    };
-
     return (
       <FaucetModal
         {...args}
@@ -39,7 +32,6 @@ export const DefaultFaucetModal: Story = {
           setIsOpen(open);
           args.setOpen(open);
         }}
-        requestTokens={mockRequestTokens}
       />
     );
   },

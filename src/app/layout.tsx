@@ -10,7 +10,7 @@ import { rehydrateClient, useAppStore } from "@/state/store";
 import { WalletTypes } from "@/types";
 import { FaucetModal } from "@/components/FaucetModal/FaucetModal";
 import { fetchUserBalance } from "@/utils/cosmjs/user/fetchUserBalance";
-import { callFaucet, microAmountToAmount, taskQueueAddresses } from "@/utils";
+import { microAmountToAmount, taskQueueAddresses } from "@/utils";
 import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -74,22 +74,6 @@ export default function RootLayout({
     }
   };
 
-  /**
-   * Request tokens from the faucet and update the balance.
-   */
-  const requestTokens = async () => {
-    await callFaucet(appStore.wallet.address);
-
-    // Wait for next block
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 400); // Simulate a .4-second delay for the wallet connection
-    });
-
-    await fetchBalance(appStore.wallet.address);
-  };
-
   // Rehydrate cosmwasm client after page reload
   useEffect(() => {
     rehydrateClient();
@@ -144,7 +128,6 @@ export default function RootLayout({
         <FaucetModal
           open={faucetModalOpen}
           setOpen={(open) => setFaucetModalOpen(open)}
-          requestTokens={() => requestTokens()}
         />
       </body>
     </html>
