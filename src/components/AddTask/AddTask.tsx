@@ -68,7 +68,7 @@ const SubmitTask = ({
         },
         "auto",
         undefined,
-        [{ amount: "1000000", denom: "uperm" }]
+        [{ amount: "1000000", denom: "ulayer" }]
       );
 
       setTaskInput(""); // Clear the input field on successful submission

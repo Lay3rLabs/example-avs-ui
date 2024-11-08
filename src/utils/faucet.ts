@@ -15,7 +15,7 @@ export const callFaucet = async (userAddress: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      denom: "uperm", // The microdenomination of the token to be credited
+      denom: "ulayer", // The microdenomination of the token to be credited
       address: userAddress, // The user's address that will receive the tokens
     }),
   });

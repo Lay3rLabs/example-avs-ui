@@ -57,7 +57,7 @@ export default function RootLayout({
    * @returns {Promise<Object>} The fetched balance object.
    */
   const fetchBalance = async (userAddress: string) => {
-    const balance = await fetchUserBalance(userAddress, "uperm");
+    const balance = await fetchUserBalance(userAddress, "ulayer");
     setUserBalance(Number(microAmountToAmount(balance.amount, 6)));
     return balance;
   };

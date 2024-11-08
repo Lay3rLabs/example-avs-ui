@@ -1,24 +1,24 @@
 /**
- * Configuration for connecting to the Layer testnet.
+ * Configuration for connecting to the Layer Hacknet.
  */
-const _TestnetConfig = {
-  /** The RPC endpoint for the Layer testnet. */
-  rpc_endpoint: "https://rpc.layer-p.net",
+const _HacknetConfig = {
+  /** The RPC endpoint for the Layer Hacknet. */
+  rpc_endpoint: "https://rpc.hack.layer.xyz",
 
-  /** The gRPC endpoint for the Layer testnet. */
-  grpc_endpoint: "https://grpc.layer-p.net:443",
+  /** The gRPC endpoint for the Layer Hacknet. */
+  grpc_endpoint: "https://grpc.hack.layer.xyz:443",
 
-  /** The LCD endpoint for the Layer testnet. */
-  lcd_endpoint: "https://api.layer-p.net",
+  /** The LCD endpoint for the Layer Hacknet. */
+  lcd_endpoint: "https://api.hack.layer.xyz",
 
-  /** The chain ID for the Layer testnet. */
-  chain_id: "layer-permissionless-3",
+  /** The chain ID for the Layer Hacknet. */
+  chain_id: "layer-hack-1",
 
-  /** The gas amount for transactions on the Layer testnet. */
+  /** The gas amount for transactions on the Layer Hacknet. */
   gas_amount: "0.025",
 
-  /** The native denomination for the Layer token in micro units (e.g., 'uperm'). */
-  native_denom: "uperm",
+  /** The native denomination for the Layer token in micro units (e.g., 'ulayer'). */
+  native_denom: "ulayer",
 };
 
 const LocalDevnetConfig = {
@@ -41,13 +41,13 @@ const LocalDevnetConfig = {
   native_denom: "uslay",
 };
 
-export const TestnetConfig =
-  process.env.ENV == "LOCAL" ? LocalDevnetConfig : _TestnetConfig;
+export const HacknetConfig =
+  process.env.ENV == "LOCAL" ? LocalDevnetConfig : _HacknetConfig;
 
 /**
- * The URL for the faucet service, used to request test tokens for the Layer testnet.
+ * The URL for the faucet service, used to request tokens for the Layer Hacknet.
  */
-export const faucetAddress = "https://faucet.layer-p.net/credit";
+export const faucetAddress = "https://faucet.hack.layer.xyz/credit";
 
 export const taskQueueAddress =
   "layer1nmv2maum4qqz85trqt9dhh7wgzwdvhuy9zkgtwkhstq392xnhm9s7j9h38";
@@ -63,31 +63,31 @@ export const taskQueueAddresses: { title: string; address: string }[] = [
 ];
 
 /**
- * Chain registry entry for the Layer testnet.
+ * Chain registry entry for the Layer Hacknet.
  * This configuration can be used to register the Layer chain in wallets and other applications.
  */
-const chainRegistryEntryTestnet = {
+const chainRegistryEntryHacknet = {
   /** The unique identifier for the Layer chain. */
-  chainId: "layer-permissionless-3",
+  chainId: "layer-hack-1",
 
   /** The human-readable name of the Layer chain. */
-  chainName: "Layer-P Testnet",
+  chainName: "Layer Hacknet",
 
   /** The RPC endpoint for interacting with the Layer chain. */
-  rpc: "https://rpc.layer-p.net",
+  rpc: "https://rpc.hack.layer.xyz",
 
   /** The gRPC endpoint for interacting with the Layer chain. */
-  grpc: "https://grpc.layer-p.net:443",
+  grpc: "https://grpc.hack.layer.xyz:443",
 
   /** The REST endpoint for interacting with the Layer chain. */
-  rest: "https://api.layer-p.net",
+  rest: "https://api.hack.layer.xyz",
 
   /** BIP44 coin type for the Layer chain. This is used for generating wallet addresses. */
   bip44: {
     coinType: 118,
   },
 
-  /** Bech32 configuration for Layer-P address prefixes. */
+  /** Bech32 configuration for Layer address prefixes. */
   bech32Config: {
     /** Prefix for account addresses (e.g., 'layer1...'). */
     bech32PrefixAccAddr: "layer",
@@ -103,65 +103,65 @@ const chainRegistryEntryTestnet = {
     bech32PrefixConsPub: "layervalconspub",
   },
 
-  /** The list of supported currencies on the Layer-P chain. */
+  /** The list of supported currencies on the Layer chain. */
   currencies: [
     {
-      /** The display denomination of the Layer-P token (e.g., 'Perm'). */
-      coinDenom: "Perm",
+      /** The display denomination of the Layer token (e.g., 'LAYER'). */
+      coinDenom: "LAYER",
 
-      /** The minimal denomination of the Layer-P token in micro units (e.g., 'uperm'). */
-      coinMinimalDenom: "uperm",
+      /** The minimal denomination of the Layer token in micro units (e.g., 'ulayer'). */
+      coinMinimalDenom: "ulayer",
 
       /** The number of decimal places the token supports. */
       coinDecimals: 6,
 
-      /** The CoinGecko ID for the Layer-P token, used for price data. */
-      coinGeckoId: "layer-p",
+      /** The CoinGecko ID for the Layer token, used for price data. */
+      coinGeckoId: "Layer",
     },
   ],
 
-  /** The list of currencies that can be used to pay transaction fees on the Layer-P chain. */
+  /** The list of currencies that can be used to pay transaction fees on the Layer chain. */
   feeCurrencies: [
     {
-      /** The display denomination of the Layer-P token (e.g., 'Perm'). */
-      coinDenom: "Perm",
+      /** The display denomination of the Layer token (e.g., 'LAYER'). */
+      coinDenom: "LAYER",
 
-      /** The minimal denomination of the Layer-P token in micro units (e.g., 'uperm'). */
-      coinMinimalDenom: "uperm",
+      /** The minimal denomination of the Layer token in micro units (e.g., 'ulayer'). */
+      coinMinimalDenom: "ulayer",
 
       /** The number of decimal places the token supports. */
       coinDecimals: 6,
 
-      /** The CoinGecko ID for the Layer-P token, used for price data. */
-      coinGeckoId: "layer-p",
+      /** The CoinGecko ID for the Layer token, used for price data. */
+      coinGeckoId: "Layer",
 
       /** Recommended gas price settings for transaction fees. */
       gasPriceStep: {
-        /** The low gas price in uperm. */
+        /** The low gas price in ulayer. */
         low: 0.015,
 
-        /** The average gas price in uperm. */
+        /** The average gas price in ulayer. */
         average: 0.025,
 
-        /** The high gas price in uperm. */
+        /** The high gas price in ulayer. */
         high: 0.035,
       },
     },
   ],
 
-  /** The staking currency for the Layer-P chain. */
+  /** The staking currency for the Layer chain. */
   stakeCurrency: {
-    /** The display denomination of the Layer-P token used for staking (e.g., 'Perm'). */
-    coinDenom: "Perm",
+    /** The display denomination of the Layer token used for staking (e.g., 'LAYER'). */
+    coinDenom: "LAYER",
 
-    /** The minimal denomination of the staking token in micro units (e.g., 'uperm'). */
-    coinMinimalDenom: "uperm",
+    /** The minimal denomination of the staking token in micro units (e.g., 'ulayer'). */
+    coinMinimalDenom: "ulayer",
 
     /** The number of decimal places the staking token supports. */
     coinDecimals: 6,
 
     /** The CoinGecko ID for the staking token, used for price data. */
-    coinGeckoId: "layer-p",
+    coinGeckoId: "Layer",
   },
 };
 
@@ -174,7 +174,7 @@ const chainRegistryEntryLocalnet = {
   chainId: "slay3r-local",
 
   /** The human-readable name of the Layer chain. */
-  chainName: "Layer-P Localnet",
+  chainName: "Layer Localnet",
 
   /** The RPC endpoint for interacting with the Layer chain. */
   rpc: "http://localhost:26657",
@@ -190,7 +190,7 @@ const chainRegistryEntryLocalnet = {
     coinType: 118,
   },
 
-  /** Bech32 configuration for Layer-P address prefixes. */
+  /** Bech32 configuration for Layer address prefixes. */
   bech32Config: {
     /** Prefix for account addresses (e.g., 'slay3r1...'). */
     bech32PrefixAccAddr: "slay3r",
@@ -271,4 +271,4 @@ const chainRegistryEntryLocalnet = {
 export const chainRegistryEntry =
   process.env.ENV == "LOCAL"
     ? chainRegistryEntryLocalnet
-    : chainRegistryEntryTestnet;
+    : chainRegistryEntryHacknet;

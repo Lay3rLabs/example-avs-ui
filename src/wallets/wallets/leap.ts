@@ -13,7 +13,7 @@ import {
   SuggestToken,
   Wallet,
 } from "@/types";
-import { TestnetConfig } from "@/utils";
+import { HacknetConfig } from "@/utils";
 import { GasPrice, SigningStargateClient } from "@cosmjs/stargate";
 
 /**
@@ -182,10 +182,10 @@ export class Leap implements Wallet {
    */
   async getSigningCosmWasmClient(): Promise<SigningCosmWasmClient> {
     return SigningCosmWasmClient.connectWithSigner(
-      TestnetConfig.rpc_endpoint,
-      this.getOfflineSigner(TestnetConfig.chain_id),
+      HacknetConfig.rpc_endpoint,
+      this.getOfflineSigner(HacknetConfig.chain_id),
       {
-        gasPrice: GasPrice.fromString("0.025uperm"),
+        gasPrice: GasPrice.fromString("0.025ulayer"),
       }
     );
   }
@@ -197,10 +197,10 @@ export class Leap implements Wallet {
    */
   async getSigningStargateClient(): Promise<SigningStargateClient> {
     return SigningStargateClient.connectWithSigner(
-      TestnetConfig.rpc_endpoint,
-      this.getOfflineSigner(TestnetConfig.chain_id),
+      HacknetConfig.rpc_endpoint,
+      this.getOfflineSigner(HacknetConfig.chain_id),
       {
-        gasPrice: GasPrice.fromString("0.025uperm"),
+        gasPrice: GasPrice.fromString("0.025ulayer"),
       }
     );
   }

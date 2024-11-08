@@ -44,7 +44,7 @@ const Topnav: React.FC<TopnavProps> = (props) => {
               {props.userBalance !== undefined && (
                 <div className="flex items-center text-text-primary text-sm font-semibold ml-4 mr-4">
                   <span className="mr-1">{props.userBalance.toFixed(2)}</span>
-                  <span className="text-text-secondary">PERM</span>
+                  <span className="text-text-secondary">LAYER</span>
                 </div>
               )}
               <div className="w-9 h-9 overflow-hidden rounded-md mr-2">

@@ -4,7 +4,7 @@ import {
 } from "@/contracts/TaskQueue.types";
 import { TaskQueueEntryProps } from "@/types";
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { taskQueueAddress, TestnetConfig } from "./constants";
+import { taskQueueAddress, HacknetConfig } from "./constants";
 import { LayerTaskQueue } from "@/contracts";
 
 export const convertTasksToTaskQueueEntryProps = (
@@ -35,7 +35,7 @@ export const convertTasksToTaskQueueEntryProps = (
 
 export const fetchTasks = async (taskQueueAddressCustom?: string) => {
   const cosmWasmClient = await CosmWasmClient.connect(
-    TestnetConfig.rpc_endpoint
+    HacknetConfig.rpc_endpoint
   );
   const taskQueueQueryClient = new LayerTaskQueue.TaskQueueQueryClient(
     cosmWasmClient,

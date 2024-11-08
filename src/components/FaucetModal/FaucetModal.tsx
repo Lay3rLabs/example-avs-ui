@@ -44,7 +44,7 @@ export function FaucetModal({
       <ModalBody>
         <p className="text-text-secondary">
           You currently have 0 tokens in your account. Please use the public
-          faucet on the Lay3r Testnet to get tokens and start using the
+          faucet on the Lay3r Hacknet to get tokens and start using the
           application.
         </p>
         {!isLoading && !isSuccess && (

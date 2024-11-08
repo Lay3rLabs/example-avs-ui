@@ -1,7 +1,7 @@
 /**
- * Converts a microdenomination (e.g., 'uperm') to its standard denomination (e.g., 'slay').
+ * Converts a microdenomination (e.g., 'ulayer') to its standard denomination (e.g., 'slay').
  *
- * @param microDenom - The microdenomination string (e.g., 'uperm').
+ * @param microDenom - The microdenomination string (e.g., 'ulayer').
  * @returns The standard denomination string (e.g., 'slay').
  */
 export function microDenomToDenom(microDenom: string): string {
@@ -9,10 +9,10 @@ export function microDenomToDenom(microDenom: string): string {
 }
 
 /**
- * Converts a standard denomination (e.g., 'slay') to its microdenomination (e.g., 'uperm').
+ * Converts a standard denomination (e.g., 'slay') to its microdenomination (e.g., 'ulayer').
  *
  * @param denom - The standard denomination string (e.g., 'slay').
- * @returns The microdenomination string (e.g., 'uperm').
+ * @returns The microdenomination string (e.g., 'ulayer').
  */
 export function denomToMicroDenom(denom: string): string {
   return denom.startsWith("u") ? denom : `u${denom}`;
@@ -23,7 +23,7 @@ export function denomToMicroDenom(denom: string): string {
  *
  * @param microAmount - The amount in micro units (e.g., 1000000 for 1 SLAY).
  * @param decimals - The number of decimal places the standard denomination has (e.g., 6 for SLAY).
- * @returns The amount in standard units as a string (e.g., '1' for 1000000 uperm).
+ * @returns The amount in standard units as a string (e.g., '1' for 1000000 ulayer).
  */
 export function microAmountToAmount(
   microAmount: number | string,
