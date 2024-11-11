@@ -4,7 +4,7 @@ import {
 } from "@/contracts/TaskQueue.types";
 import { TaskQueueEntryProps } from "@/types";
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { taskQueueAddress, HacknetConfig } from "./constants";
+import { HacknetConfig } from "./constants";
 import { LayerTaskQueue } from "@/contracts";
 
 export const convertTasksToTaskQueueEntryProps = (
@@ -16,7 +16,7 @@ export const convertTasksToTaskQueueEntryProps = (
       return {
         id: task.id.toString(),
         status: "QUEUED",
-        addedTime: new Date(task.expires * 1000).toISOString(), // assuming `expires` is in seconds
+        addedTime: new Date(Number(task.expires) / 1e6).toISOString(), // assuming `expires` is in nanoseconds.
         finishTime: undefined, // Not finished yet
         json: JSON.stringify(task.payload),
       };
@@ -25,21 +25,21 @@ export const convertTasksToTaskQueueEntryProps = (
       return {
         id: task.id.toString(),
         status: "COMPLETE",
-        addedTime: new Date(task.completed * 1000).toISOString(), // assuming `completed` is in seconds
-        finishTime: new Date(task.completed * 1000).toISOString(), // Same as completed time
+        addedTime: new Date(Number(task.completed) / 1e6).toISOString(), // assuming `completed` is in nanoseconds.
+        finishTime: new Date(Number(task.completed) / 1e6).toISOString(), // Same as completed time
         json: JSON.stringify(task.result),
       };
     }
   });
 };
 
-export const fetchTasks = async (taskQueueAddressCustom?: string) => {
+export const fetchTasks = async (taskQueueAddress: string) => {
   const cosmWasmClient = await CosmWasmClient.connect(
     HacknetConfig.rpc_endpoint
   );
   const taskQueueQueryClient = new LayerTaskQueue.TaskQueueQueryClient(
     cosmWasmClient,
-    taskQueueAddressCustom ? taskQueueAddressCustom : taskQueueAddress
+    taskQueueAddress
   );
 
   // Get completed tasks

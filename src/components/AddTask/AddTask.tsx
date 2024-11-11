@@ -1,6 +1,5 @@
 import { TaskQueueClient } from "@/contracts/TaskQueue.client";
 import { useAppStore } from "@/state/store";
-import { taskQueueAddress } from "@/utils";
 import React, { useState } from "react";
 import { Card } from "../Card/Card";
 
@@ -9,17 +8,15 @@ import { Card } from "../Card/Card";
  * The task consists of a numerical value which will be processed through a math function.
  *
  * @param {Object} props - The properties passed to the component.
- * @param {string} [props.taskQueueAddressCustom] - Optional custom task queue address to override the default.
+ * @param {string} [props.taskQueueAddress] - Task queue address.
  *
  * @returns {JSX.Element | null} Returns the form to submit a task or null if wallet address or signing client is not available.
  */
-const SubmitTask = ({
-  taskQueueAddressCustom,
-}: {
-  taskQueueAddressCustom?: string;
-}) => {
+const SubmitTask = ({ taskQueueAddress }: { taskQueueAddress: string }) => {
   const [taskInput, setTaskInput] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isInsufficientFunds, setIsInsufficientFunds] =
+    useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const appStore = useAppStore();
@@ -43,7 +40,7 @@ const SubmitTask = ({
     const taskQueueClient = new TaskQueueClient(
       appStore.cosmWasmSigningClient!,
       appStore.wallet.address,
-      taskQueueAddressCustom ? taskQueueAddressCustom : taskQueueAddress
+      taskQueueAddress
     );
 
     // Validate the input value
@@ -53,6 +50,7 @@ const SubmitTask = ({
     }
 
     setErrorMessage(null);
+    setIsInsufficientFunds(false);
 
     const payload = { x: taskValue };
 
@@ -74,7 +72,14 @@ const SubmitTask = ({
       setTaskInput(""); // Clear the input field on successful submission
     } catch (error) {
       console.error("Error submitting task:", error);
-      setErrorMessage("Failed to submit task.");
+      if (
+        error instanceof Error &&
+        error.message.includes("insufficient funds")
+      ) {
+        setIsInsufficientFunds(true);
+      } else {
+        setErrorMessage("Failed to submit task.");
+      }
     } finally {
       setIsSubmitting(false); // Reset submitting state
     }
@@ -108,6 +113,20 @@ const SubmitTask = ({
         </div>
 
         {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+        {isInsufficientFunds && (
+          <p className="text-red-500 text-sm">
+            Insufficient funds. Please request more tokens from the{" "}
+            <a
+              href="https://t.me/LayerUp_bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              Telegram Bot
+            </a>
+            .
+          </p>
+        )}
       </Card>
     </form>
   );

@@ -49,16 +49,13 @@ export const HacknetConfig =
  */
 export const faucetAddress = "https://faucet.hack.layer.xyz/credit";
 
-export const taskQueueAddress =
-  "layer1nmv2maum4qqz85trqt9dhh7wgzwdvhuy9zkgtwkhstq392xnhm9s7j9h38";
-
 /**
  * The title is used for navigation
  */
 export const taskQueueAddresses: { title: string; address: string }[] = [
   {
     title: "Square Task",
-    address: "layer1nmv2maum4qqz85trqt9dhh7wgzwdvhuy9zkgtwkhstq392xnhm9s7j9h38",
+    address: "layer1dkewprupg2xcr4nvmztc5ekz5ed3cu5qzchmxq9rv7sz5s5kq3psjc7z9e",
   },
 ];
 
